@@ -1,0 +1,116 @@
+{
+  "match_id": "LOL_LCK_2024_SPRING_G1",
+  "game": "League of Legends",
+  "tournament": "LCK Spring 2024",
+  "date": "2024-03-15",
+  "teams": {
+    "team_a": "T1",
+    "team_b": "Gen.G"
+  },
+  "hero_picks": {
+    "team_a": ["Gnar", "Vi", "Azir", "Varus", "Thresh"],
+    "team_b": ["Renekton", "Lee Sin", "Orianna", "Jinx", "Nautilus"]
+  },
+  "bans": {
+    "team_a": ["Twisted Fate", "Caitlyn", "Jax", "Xayah", "Maokai"],
+    "team_b": ["Ahri", "Kalista", "Sylas", "Aphelios", "Rell"]
+  },
+  "events": [
+    {
+      "time": "2:15",
+      "type": "first_blood",
+      "team": "team_b",
+      "details": "Lee Sin ganks top lane, Renekton secures kill on Gnar",
+      "gold_swing": "+400"
+    },
+    {
+      "time": "5:45",
+      "type": "jungle_invade",
+      "team": "team_a",
+      "details": "Vi steals red buff, forces Lee Sin flash",
+      "gold_swing": "+200"
+    },
+    {
+      "time": "8:30",
+      "type": "dragon",
+      "team": "team_a",
+      "details": "Cloud Dragon secured uncontested",
+      "gold_swing": "+300"
+    },
+    {
+      "time": "12:20",
+      "type": "first_tower",
+      "team": "team_a",
+      "details": "Bot tower falls after successful 4-man dive",
+      "gold_swing": "+550"
+    },
+    {
+      "time": "14:50",
+      "type": "team_fight",
+      "winner": "team_b",
+      "details": "Mid lane skirmish - Gen.G wins 3-1, Orianna shockwave catches 3",
+      "kills": "3-1",
+      "gold_swing": "+900"
+    },
+    {
+      "time": "18:15",
+      "type": "dragon",
+      "team": "team_b",
+      "details": "Infernal Dragon - Gen.G trades tower for dragon",
+      "gold_swing": "+350"
+    },
+    {
+      "time": "22:40",
+      "type": "baron_attempt",
+      "team": "team_a",
+      "details": "T1 starts Baron but forced to back off, no casualties",
+      "gold_swing": "0"
+    },
+    {
+      "time": "25:10",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "Dragon pit fight - T1 wins 4-2, Azir emperor's divide splits enemy team",
+      "kills": "4-2",
+      "gold_swing": "+1200"
+    },
+    {
+      "time": "27:30",
+      "type": "baron",
+      "team": "team_a",
+      "details": "Baron secured after winning team fight, Gen.G respawns too late",
+      "gold_swing": "+1500"
+    },
+    {
+      "time": "29:45",
+      "type": "inhibitor",
+      "team": "team_a",
+      "details": "Mid inhibitor destroyed with Baron buff",
+      "gold_swing": "+500"
+    },
+    {
+      "time": "31:20",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "Base defense fails - T1 aces Gen.G 5-0 at nexus towers",
+      "kills": "5-0",
+      "gold_swing": "+2000"
+    },
+    {
+      "time": "32:05",
+      "type": "victory",
+      "team": "team_a",
+      "details": "Nexus destroyed - T1 wins"
+    }
+  ],
+  "final_stats": {
+    "duration": "32:05",
+    "team_a_kills": 18,
+    "team_b_kills": 12,
+    "team_a_gold": 58400,
+    "team_b_gold": 51200,
+    "team_a_towers": 9,
+    "team_b_towers": 3
+  },
+  "commentary": "This LCK match between T1 and Gen.G showcased the highest level of League of Legends play. Gen.G drew first blood at 2:15 with an aggressive top lane gank, setting an early tempo. However, T1's Vi constantly pressured Gen.G's jungle, creating opportunities across the map.\n\nThe game remained close through the mid-game, with both teams trading objectives. The critical turning point came at 25:10 when T1's Azir landed a game-changing Emperor's Divide in the dragon pit team fight, splitting Gen.G's formation and allowing T1 to win decisively 4-2.\n\nWith this momentum, T1 secured Baron at 27:30 and used the buff to break Gen.G's base. Despite Gen.G's desperate defense, T1's superior team fighting proved decisive. Faker's Azir positioning was masterful throughout, while Gumayusi's Varus provided consistent DPS.\n\nThe final base push saw T1 ace Gen.G 5-0, demonstrating their mechanical superiority and strategic execution. This victory showcased T1's ability to capitalize on single mistakes and snowball advantages effectively."
+}

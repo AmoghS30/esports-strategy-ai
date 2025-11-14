@@ -1,0 +1,72 @@
+# ----------------------------------------
+# Global
+# ----------------------------------------
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python environments (root-level)
+.env
+.venv
+env/
+venv/
+
+# ----------------------------------------
+# Backend (Flask / Python)
+# ----------------------------------------
+backend/__pycache__/
+backend/**/*.pyc
+backend/*.pyc
+
+# Flask instance folder
+backend/instance/
+backend/*.db
+backend/*.sqlite3
+
+# Virtual environments if inside backend/
+backend/.env
+backend/.venv
+backend/env/
+backend/venv/
+
+# Pytest / coverage
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/coverage.xml
+
+# Build and packaging
+backend/build/
+backend/dist/
+backend/*.egg-info/
+
+# ----------------------------------------
+# Frontend (Vite / Node)
+# ----------------------------------------
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# ----------------------------------------
+# Root-level Node (if used)
+# ----------------------------------------
+node_modules/
+dist/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json

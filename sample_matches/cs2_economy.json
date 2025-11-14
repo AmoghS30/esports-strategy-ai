@@ -1,0 +1,224 @@
+{
+  "match_id": "CS2_BLAST_SPRING_2024_QF1",
+  "game": "Counter-Strike 2",
+  "tournament": "BLAST Premier Spring 2024 - Quarterfinals",
+  "date": "2024-04-05",
+  "map": "Ancient",
+  "teams": {
+    "team_a": "FaZe Clan",
+    "team_b": "Natus Vincere"
+  },
+  "hero_picks": {
+    "team_a": ["karrigan (IGL)", "rain", "Twistzz", "ropz", "frozen"],
+    "team_b": ["Aleksib (IGL)", "s1mple", "electroNic", "Perfecto", "b1t"]
+  },
+  "events": [
+    {
+      "round": 1,
+      "type": "pistol_round",
+      "winner": "team_a",
+      "score": "1-0",
+      "details": "FaZe wins T pistol, ropz gets 3k on B site",
+      "money": "team_a: $4950, team_b: $1400"
+    },
+    {
+      "round": 2,
+      "type": "force_buy",
+      "winner": "team_a",
+      "score": "2-0",
+      "details": "NaVi forces but loses, FaZe economy rolling",
+      "money": "team_a: $8400, team_b: $1900"
+    },
+    {
+      "round": 3,
+      "type": "eco_round",
+      "winner": "team_a",
+      "score": "3-0",
+      "details": "NaVi full eco, saves for round 4",
+      "money": "team_a: $11200, team_b: $4500"
+    },
+    {
+      "round": 4,
+      "type": "force_buy_success",
+      "winner": "team_b",
+      "score": "3-1",
+      "details": "HUGE! NaVi force buy works, s1mple AWP ace stops the streak",
+      "money": "team_a: $6800, team_b: $7200",
+      "highlight": true
+    },
+    {
+      "round": 5,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "3-2",
+      "details": "Both full buy, NaVi wins A site execute 5v4",
+      "money": "team_a: $3100, team_b: $9500"
+    },
+    {
+      "round": 6,
+      "type": "eco_round",
+      "winner": "team_b",
+      "score": "3-3",
+      "details": "FaZe eco, NaVi takes round easily",
+      "money": "team_a: $5800, team_b: $11800"
+    },
+    {
+      "round": 7,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "4-3",
+      "details": "FaZe force buy pays off! Twistzz 1v3 clutch",
+      "money": "team_a: $8700, team_b: $7200",
+      "highlight": true
+    },
+    {
+      "round": 8,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "5-3",
+      "details": "karrigan perfect mid call catches NaVi rotating",
+      "money": "team_a: $10400, team_b: $3800"
+    },
+    {
+      "round": 9,
+      "type": "force_buy",
+      "winner": "team_a",
+      "score": "6-3",
+      "details": "NaVi forces again but FaZe holds",
+      "money": "team_a: $12000, team_b: $2100"
+    },
+    {
+      "round": 10,
+      "type": "eco_round",
+      "winner": "team_a",
+      "score": "7-3",
+      "details": "NaVi eco, playing for halftime",
+      "money": "team_a: $13500, team_b: $4900"
+    },
+    {
+      "round": 11,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "7-4",
+      "details": "NaVi finally gets a buy round win with full util usage",
+      "money": "team_a: $10200, team_b: $7600"
+    },
+    {
+      "round": 12,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "8-4",
+      "details": "FaZe closes half strong, frozen 3k holds B",
+      "money": "FaZe leads 8-4 at halftime on T side"
+    },
+    {
+      "round": 13,
+      "type": "pistol_round",
+      "winner": "team_b",
+      "score": "8-5",
+      "details": "NaVi wins CT pistol, b1t 4k",
+      "money": "team_a: $4100, team_b: $7200"
+    },
+    {
+      "round": 14,
+      "type": "force_buy",
+      "winner": "team_b",
+      "score": "8-6",
+      "details": "FaZe forces but NaVi holds comfortably",
+      "money": "team_a: $2400, team_b: $10100"
+    },
+    {
+      "round": 15,
+      "type": "eco_round",
+      "winner": "team_b",
+      "score": "8-7",
+      "details": "FaZe eco, saving weapons",
+      "money": "team_a: $5200, team_b: $12500"
+    },
+    {
+      "round": 16,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "8-8",
+      "details": "Game tied! electroNic clutches 1v2 defuse",
+      "money": "team_a: $4100, team_b: $9800",
+      "highlight": true
+    },
+    {
+      "round": 17,
+      "type": "force_buy",
+      "winner": "team_a",
+      "score": "9-8",
+      "details": "FaZe forces and wins! ropz gets crucial 2k entry",
+      "money": "team_a: $7900, team_b: $6500"
+    },
+    {
+      "round": 18,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "10-8",
+      "details": "Both teams full buy, FaZe wins aim duels on A site",
+      "money": "team_a: $9200, team_b: $3200"
+    },
+    {
+      "round": 19,
+      "type": "eco_round",
+      "winner": "team_a",
+      "score": "11-8",
+      "details": "NaVi eco, FaZe on match point",
+      "money": "team_a: $10800, team_b: $5900"
+    },
+    {
+      "round": 20,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "11-9",
+      "details": "NaVi keeps it alive, s1mple AWP 4k",
+      "money": "team_a: $7500, team_b: $8200",
+      "highlight": true
+    },
+    {
+      "round": 21,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "11-10",
+      "details": "NaVi comeback continues! Perfecto ninja defuse in smoke",
+      "money": "team_a: $5100, team_b: $10500",
+      "highlight": true
+    },
+    {
+      "round": 22,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "11-11",
+      "details": "GAME TIED 11-11! NaVi completes comeback from 8-3",
+      "money": "team_a: $3800, team_b: $11200"
+    },
+    {
+      "round": 23,
+      "type": "eco_round",
+      "winner": "team_b",
+      "score": "11-12",
+      "details": "FaZe forced to eco, NaVi takes lead!",
+      "money": "team_a: $6500, team_b: $13000"
+    },
+    {
+      "round": 24,
+      "type": "match_point",
+      "winner": "team_b",
+      "score": "11-13",
+      "details": "NAVI WINS! Aleksib perfect call, s1mple closes it out",
+      "highlight": true
+    }
+  ],
+  "final_stats": {
+    "score": "11-13",
+    "team_a_t_side": "8-4",
+    "team_a_ct_side": "3-9",
+    "team_b_t_side": "4-8",
+    "team_b_ct_side": "9-3",
+    "mvp": "s1mple (NaVi)",
+    "mvp_stats": "31/19, 98 ADR, AWP masterclass"
+  },
+  "commentary": "This Ancient match was a masterclass in economy management and mental fortitude. FaZe dominated the first half on T side, taking an 8-4 lead with karrigan's perfect mid-round calls and excellent trading.\n\nThe second half pistol win for NaVi proved crucial, allowing them to build an economy and mount a comeback. Down 8-11 and facing match point, NaVi refused to break. s1mple's AWP play became increasingly dominant, while Perfecto's ninja defuse in round 21 completely shifted momentum.\n\nFaZe's economy management faltered in the second half. After losing key anti-eco rounds, they were forced into multiple save rounds that allowed NaVi to build an insurmountable money advantage. By round 23, FaZe was broke while NaVi had max money.\n\nThe comeback from 8-11 to 13-11 showcases why NaVi is considered the best CT side team in CS2. Their utility usage, crossfire setups, and ability to punish any mistake made it nearly impossible for FaZe to break their defense once the economy reset.\n\nThis match emphasizes the critical importance of economy management in CS2—NaVi's patience and smart force buy decisions ultimately won them the map."
+}

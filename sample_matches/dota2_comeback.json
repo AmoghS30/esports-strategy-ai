@@ -1,0 +1,121 @@
+{
+  "match_id": "DOTA2_TI12_GRANDFINALS_G3",
+  "game": "Dota 2",
+  "tournament": "The International 12 - Grand Finals",
+  "date": "2024-08-20",
+  "teams": {
+    "team_a": "Team Spirit",
+    "team_b": "PSG.LGD"
+  },
+  "hero_picks": {
+    "team_a": ["Mars", "Bane", "Queen of Pain", "Phantom Assassin", "Crystal Maiden"],
+    "team_b": ["Tidehunter", "Nature's Prophet", "Puck", "Luna", "Io"]
+  },
+  "bans": {
+    "team_a": ["Invoker", "Shadow Fiend", "Morphling", "Leshrac", "Razor"],
+    "team_b": ["Magnus", "Tiny", "Snapfire", "Enigma", "Beastmaster"]
+  },
+  "events": [
+    {
+      "time": "0:00",
+      "type": "draft_analysis",
+      "team": "both",
+      "details": "Team Spirit drafts scaling lineup with PA carry. LGD opts for early-mid game timing with Luna"
+    },
+    {
+      "time": "4:30",
+      "type": "first_blood",
+      "team": "team_b",
+      "details": "Nature's Prophet teleport gank secures first blood on Queen of Pain mid",
+      "networth_swing": "+300"
+    },
+    {
+      "time": "8:15",
+      "type": "tower",
+      "team": "team_b",
+      "details": "Tier 1 safe lane tower falls, LGD pressuring hard",
+      "networth_swing": "+800"
+    },
+    {
+      "time": "12:40",
+      "type": "team_fight",
+      "winner": "team_b",
+      "details": "Tier 2 tower defense fails - LGD wins fight 4-1, Tidehunter Ravage catches 3",
+      "kills": "4-1",
+      "networth_swing": "+2100"
+    },
+    {
+      "time": "16:20",
+      "type": "roshan",
+      "team": "team_b",
+      "details": "First Roshan secured by LGD, Aegis on Luna",
+      "networth_swing": "+2000"
+    },
+    {
+      "time": "19:45",
+      "type": "team_fight",
+      "winner": "team_b",
+      "details": "High ground push - LGD takes melee barracks, wins fight 3-2",
+      "kills": "3-2",
+      "networth_swing": "+1500"
+    },
+    {
+      "time": "23:00",
+      "type": "networth_peak",
+      "team": "team_b",
+      "details": "LGD reaches 18k gold lead - appears unbeatable",
+      "networth_difference": "+18000"
+    },
+    {
+      "time": "26:30",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "HUGE TURNAROUND! Spirit wins fight 4-0 near Rosh pit, PA crits delete Luna through Aegis",
+      "kills": "4-0",
+      "networth_swing": "-3500"
+    },
+    {
+      "time": "28:10",
+      "type": "roshan",
+      "team": "team_a",
+      "details": "Team Spirit secures Roshan, Aegis on Phantom Assassin",
+      "networth_swing": "+2000"
+    },
+    {
+      "time": "31:45",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "Mid lane fight - Spirit wins 5-1, Mars spear catches 2 into Arena wall",
+      "kills": "5-1",
+      "networth_swing": "-4200"
+    },
+    {
+      "time": "34:20",
+      "type": "networth_equalized",
+      "team": "both",
+      "details": "Gold completely even - Spirit completed comeback from 18k deficit"
+    },
+    {
+      "time": "37:15",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "LGD's base - Spirit aces LGD 5-0, PA has Divine Rapier",
+      "kills": "5-0",
+      "networth_swing": "-5000"
+    },
+    {
+      "time": "38:40",
+      "type": "victory",
+      "team": "team_a",
+      "details": "Ancient falls - Team Spirit completes miraculous comeback!"
+    }
+  ],
+  "final_stats": {
+    "duration": "38:40",
+    "team_a_kills": 31,
+    "team_b_kills": 19,
+    "max_gold_deficit_team_a": 18000,
+    "comeback_swing": 23000
+  },
+  "commentary": "In what will be remembered as one of the greatest comebacks in Dota 2 history, Team Spirit overcame an 18,000 gold deficit to defeat PSG.LGD in the TI12 Grand Finals.\n\nThe early game heavily favored LGD. Their aggressive Nature's Prophet rotations and Luna's farming efficiency created an insurmountable lead by 23 minutes. Most teams would have called GG, but Team Spirit refused to surrender.\n\nThe turning point came at 26:30 in a crucial Roshan pit fight. Despite being massively behind, Phantom Assassin's critical strikes deleted Luna through Aegis, and suddenly the game was alive again. This single fight shifted momentum completely.\n\nTeam Spirit's patience in defending high ground while their PA farmed proved critical. Each successful defense bought time, and each fight Spirit won chipped away at LGD's lead. The Mars-Bane combo consistently caught LGD heroes out of position.\n\nBy 34 minutes, the gold was even. LGD, who had seemed certain to win, now looked desperate. The final base push saw PA with Divine Rapier absolutely demolish LGD's lineup. Spirit aced them 5-0 and claimed the Aegis of Champions.\n\nThis match demonstrates that in Dota 2, the game is never truly over. Team Spirit's mental fortitude, perfect execution, and belief in their late-game composition created one of esports' most memorable moments."
+}

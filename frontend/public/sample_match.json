@@ -1,0 +1,20 @@
+{
+  "match_id": "LOL_WORLDS_2024_FINALS",
+  "teams": {
+    "team_a": "T1",
+    "team_b": "JDG Gaming"
+  },
+  "hero_picks": {
+    "team_a": ["Aatrox", "Lee Sin", "Orianna", "Jinx", "Thresh"],
+    "team_b": ["Gnar", "Viego", "Ahri", "Aphelios", "Nautilus"]
+  },
+  "events": [
+    {"time": "2:45", "type": "first_blood", "team": "team_a", "details": "Lee Sin ganks mid"},
+    {"time": "6:30", "type": "dragon", "team": "team_b", "details": "Cloud Dragon"},
+    {"time": "12:20", "type": "first_tower", "team": "team_a"},
+    {"time": "18:45", "type": "baron", "team": "team_a"},
+    {"time": "23:10", "type": "team_fight", "winner": "team_a", "details": "5-1 ace"},
+    {"time": "25:40", "type": "victory", "team": "team_a"}
+  ],
+  "commentary": "T1 demonstrated exceptional macro play throughout the match. Early aggression from Lee Sin secured first blood at 2:45, setting the tone for the game. Despite JDG's attempt to control objectives with the early dragon, T1's superior team coordination became evident in the mid-game. The crucial Baron fight at 18:45 showcased Faker's legendary Orianna mechanics, landing a 4-man shockwave that turned the tide completely. The final team fight near dragon pit resulted in a clean ace, allowing T1 to push for the championship victory."
+}

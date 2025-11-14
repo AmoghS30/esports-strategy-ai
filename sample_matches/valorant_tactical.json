@@ -1,0 +1,218 @@
+{
+  "match_id": "VAL_CHAMPIONS_2024_SEMIS_M1",
+  "game": "Valorant",
+  "tournament": "Valorant Champions 2024 - Semifinals",
+  "date": "2024-09-10",
+  "map": "Haven",
+  "teams": {
+    "team_a": "Fnatic",
+    "team_b": "Paper Rex"
+  },
+  "hero_picks": {
+    "team_a": ["Jett", "Sova", "Omen", "Killjoy", "Breach"],
+    "team_b": ["Raze", "Fade", "Astra", "Cypher", "Skye"]
+  },
+  "events": [
+    {
+      "time": "Round 1",
+      "round": 1,
+      "type": "pistol_round",
+      "winner": "team_a",
+      "score": "1-0",
+      "details": "Fnatic wins pistol - derke gets 3k with Sheriff",
+      "site": "B"
+    },
+    {
+      "time": "Round 2",
+      "round": 2,
+      "type": "anti_eco",
+      "winner": "team_a",
+      "score": "2-0",
+      "details": "Full buy advantage, clean round",
+      "site": "A"
+    },
+    {
+      "time": "Round 3",
+      "round": 3,
+      "type": "eco_upset",
+      "winner": "team_b",
+      "score": "2-1",
+      "details": "PRX force buy works! Jinggg Raze satchels in for 4k ace",
+      "site": "C",
+      "highlight": true
+    },
+    {
+      "time": "Round 4",
+      "round": 4,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "2-2",
+      "details": "Paper Rex full buy, execute A site perfectly",
+      "site": "A"
+    },
+    {
+      "time": "Round 5",
+      "round": 5,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "3-2",
+      "details": "Boaster clutches 1v3 on B site with Breach stun",
+      "site": "B",
+      "highlight": true
+    },
+    {
+      "time": "Round 6",
+      "round": 6,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "4-2",
+      "details": "Leo Sova utility control shuts down PRX push",
+      "site": "C"
+    },
+    {
+      "time": "Round 7",
+      "round": 7,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "4-3",
+      "details": "Something op picks get 3 opening kills on defense",
+      "site": "A"
+    },
+    {
+      "time": "Round 8",
+      "round": 8,
+      "type": "save_round",
+      "winner": "team_a",
+      "score": "5-3",
+      "details": "PRX saves, time expires"
+    },
+    {
+      "time": "Round 9",
+      "round": 9,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "5-4",
+      "details": "PRX retakes B site 4v4 post-plant",
+      "site": "B"
+    },
+    {
+      "time": "Round 10",
+      "round": 10,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "6-4",
+      "details": "Fnatic fake A, rush C, plant and hold",
+      "site": "C"
+    },
+    {
+      "time": "Round 11",
+      "round": 11,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "7-4",
+      "details": "Derke Jett op dominates long angles",
+      "site": "A"
+    },
+    {
+      "time": "Round 12",
+      "round": 12,
+      "type": "thrifty",
+      "winner": "team_b",
+      "score": "7-5",
+      "details": "PRX wins with spectre and ghost guns!",
+      "site": "B",
+      "highlight": true
+    },
+    {
+      "time": "Halftime",
+      "score": "7-5",
+      "details": "Fnatic leads 7-5 at half on attack"
+    },
+    {
+      "time": "Round 13",
+      "round": 13,
+      "type": "pistol_round",
+      "winner": "team_b",
+      "score": "7-6",
+      "details": "PRX wins second pistol with Jinggg 4k",
+      "site": "B"
+    },
+    {
+      "time": "Round 14-16",
+      "type": "streak",
+      "winner": "team_b",
+      "score": "7-9",
+      "details": "PRX wins 3 straight rounds with full buys, momentum shift"
+    },
+    {
+      "time": "Round 17",
+      "round": 17,
+      "type": "timeout_fnatic",
+      "details": "Fnatic calls timeout down 7-9"
+    },
+    {
+      "time": "Round 18",
+      "round": 18,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "8-9",
+      "details": "Timeout works! Fnatic wins crucial round with new strat",
+      "site": "A"
+    },
+    {
+      "time": "Round 19",
+      "round": 19,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "9-9",
+      "details": "Fnatic ties it up 9-9, Alfajer clutches 1v2",
+      "site": "C",
+      "highlight": true
+    },
+    {
+      "time": "Round 20",
+      "round": 20,
+      "type": "buy_round",
+      "winner": "team_a",
+      "score": "10-9",
+      "details": "Fnatic takes lead! Chronicle Omen smokes deny retake",
+      "site": "B"
+    },
+    {
+      "time": "Round 21",
+      "round": 21,
+      "type": "eco_round",
+      "winner": "team_a",
+      "score": "11-9",
+      "details": "PRX force buy fails, Fnatic 2 away from map win",
+      "site": "A"
+    },
+    {
+      "time": "Round 22",
+      "round": 22,
+      "type": "buy_round",
+      "winner": "team_b",
+      "score": "11-10",
+      "details": "PRX keeps it alive with perfect execute",
+      "site": "C"
+    },
+    {
+      "time": "Round 23",
+      "round": 23,
+      "type": "match_point",
+      "winner": "team_a",
+      "score": "12-10",
+      "details": "FNATIC WINS! Derke gets 3k to close map",
+      "site": "A",
+      "highlight": true
+    }
+  ],
+  "final_stats": {
+    "score": "12-10",
+    "attack_side_team_a": "7-5",
+    "defense_side_team_a": "5-5",
+    "mvp": "derke (Jett)",
+    "mvp_stats": "28/18/7 - 315 ACS"
+  },
+  "commentary": "This Haven map between Fnatic and Paper Rex showcased tactical Valorant at its finest. Fnatic started strong on attack, taking the first pistol and building a 7-5 halftime lead behind derke's exceptional Jett OP play.\n\nPaper Rex came alive in the second half, winning the pistol round and riding that momentum to a 9-7 lead. Jinggg's aggressive Raze play constantly caught Fnatic off-guard, and Paper Rex's coordinated site executes were nearly flawless.\n\nThe critical moment came at round 17 when Fnatic, down 7-9, called their final timeout. Whatever Boaster said worked—Fnatic won 5 of the next 6 rounds to close out the map 12-10.\n\nKey factors in Fnatic's victory: Leo's Sova utility control that consistently revealed PRX positions, Chronicle's Omen smokes that denied crucial retakes, and Alfajer's clutch plays in critical moments. Derke's 3k in the final round sealed the deal.\n\nPaper Rex showed why they're feared with their aggressive, unpredictable playstyle, but Fnatic's discipline and tactical adjustments proved superior in this match."
+}

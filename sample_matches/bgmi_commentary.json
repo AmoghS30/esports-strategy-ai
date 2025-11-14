@@ -1,0 +1,356 @@
+{
+  "match_id": "BGMI_BMPS_S3_FINALS_2024_M5_G3",
+  "game": "Battlegrounds Mobile India (BGMI)",
+  "tournament": "Battlegrounds Mobile Pro Series Season 3 - Grand Finals",
+  "date": "2024-10-15",
+  "map": "Erangel",
+  "mode": "TPP Squad",
+  "teams": {
+    "team_a": "Team Soul",
+    "team_b": "Godlike Esports"
+  },
+  "team_compositions": {
+    "team_soul": {
+      "players": ["Mortal", "Viper", "Clutchgod", "Regaltos"],
+      "roles": {
+        "Mortal": "IGL/Fragger",
+        "Viper": "Assaulter",
+        "Clutchgod": "Support",
+        "Regaltos": "Sniper"
+      }
+    },
+    "godlike": {
+      "players": ["Jonathan", "Zgod", "Neyoo", "Clutch"],
+      "roles": {
+        "Jonathan": "IGL",
+        "Zgod": "Fragger",
+        "Neyoo": "Support",
+        "Clutch": "Assaulter"
+      }
+    }
+  },
+  "hero_picks": {
+    "team_a": ["Mortal (M416+Kar98)", "Viper (AKM+M24)", "Clutchgod (M416+Mini14)", "Regaltos (Groza+AWM)"],
+    "team_b": ["Jonathan (M416+Kar98)", "Zgod (AKM+Kar98)", "Neyoo (SCAR-L+SKS)", "Clutch (M416+M24)"]
+  },
+  "landing_spots": {
+    "team_soul": "Pochinki",
+    "godlike": "Rozhok",
+    "other_notable": {
+      "team_orangutan": "School",
+      "team_xspark": "Military Base",
+      "skylightz_gaming": "Georgopol"
+    }
+  },
+  "events": [
+    {
+      "time": "0:00",
+      "phase": "Plane Route",
+      "type": "match_start",
+      "details": "Plane route: From Sosnovka Military Base to Stalber. 20 teams, 80 players"
+    },
+    {
+      "time": "0:15",
+      "phase": "Landing Phase",
+      "type": "landing",
+      "team": "team_a",
+      "details": "Team Soul lands Pochinki apartments. Clean landing, no contest"
+    },
+    {
+      "time": "0:18",
+      "phase": "Landing Phase",
+      "type": "landing",
+      "team": "team_b",
+      "details": "Godlike lands Rozhok school. Contested by Team XSpark"
+    },
+    {
+      "time": "1:30",
+      "phase": "Early Loot",
+      "type": "first_blood",
+      "team": "other",
+      "details": "Skylightz Gaming eliminates Team IND in Georgopol (70 alive)"
+    },
+    {
+      "time": "2:45",
+      "phase": "Early Game",
+      "type": "hot_drop_fight",
+      "team": "team_b",
+      "details": "Godlike wins Rozhok fight vs XSpark. Jonathan gets 2 kills, Zgod finishes 1. XSpark eliminated (68 alive)"
+    },
+    {
+      "time": "3:20",
+      "zone": "Zone 1 Revealed",
+      "type": "zone_announcement",
+      "details": "First zone closes toward center-west. Pochinki and Rozhok both in safe zone"
+    },
+    {
+      "time": "4:15",
+      "phase": "Rotation",
+      "type": "vehicle_rotation",
+      "team": "team_a",
+      "details": "Soul secures 2 vehicles from garage, rotates toward zone center (64 alive)"
+    },
+    {
+      "time": "5:30",
+      "phase": "Mid Game",
+      "type": "third_party",
+      "team": "team_a",
+      "details": "Soul third-parties fight near Mylta. Mortal gets 2 kills with Kar98 headshots. Team eliminated (58 alive)",
+      "kills": {
+        "Mortal": 2,
+        "Viper": 1
+      }
+    },
+    {
+      "time": "6:45",
+      "zone": "Zone 2",
+      "type": "zone_shift",
+      "details": "Second zone revealed. Center shifts north. Both teams need to rotate"
+    },
+    {
+      "time": "8:10",
+      "phase": "Mid Game Rotation",
+      "type": "rotation_fight",
+      "team": "team_b",
+      "details": "Godlike ambushes rotating team near Lipovka. Zgod AKM spray gets 3 knock-downs. Team wipe (51 alive)",
+      "kills": {
+        "Zgod": 3,
+        "Jonathan": 1
+      }
+    },
+    {
+      "time": "9:30",
+      "phase": "Compound Hold",
+      "type": "position_secured",
+      "team": "team_a",
+      "details": "Soul secures compound in zone 3 center. Strong defensive position with full level 3 gear"
+    },
+    {
+      "time": "11:15",
+      "zone": "Zone 3",
+      "type": "zone_pressure",
+      "details": "Zone 3 active. 8 teams remaining, 32 players alive. Circle heavily favors Soul's position"
+    },
+    {
+      "time": "12:40",
+      "phase": "Late Game",
+      "type": "gatekeeping",
+      "team": "team_a",
+      "details": "Soul gatekeeps rotating teams. Regaltos AWM down on Team Orangutan's IGL. Team forced to use smokes (28 alive)",
+      "kills": {
+        "Regaltos": 1
+      }
+    },
+    {
+      "time": "14:20",
+      "phase": "Late Game",
+      "type": "pinch",
+      "team": "team_b",
+      "details": "Godlike gets pinched between two teams near Zone 4 edge. Neyoo knocked, revived in smoke (24 alive)"
+    },
+    {
+      "time": "15:45",
+      "zone": "Zone 4",
+      "type": "circle_rng",
+      "details": "Zone 4 shift favors Soul heavily. They're dead center. Godlike on edge, must rotate under pressure"
+    },
+    {
+      "time": "17:10",
+      "phase": "Crucial Rotation",
+      "type": "rotation_fight",
+      "team": "team_b",
+      "details": "Godlike forced to rotate through open field. Soul spots them. Viper knocks Clutch with M416 spray",
+      "damage_dealt": "Soul: 280, Godlike: 120"
+    },
+    {
+      "time": "17:35",
+      "phase": "Turning Point",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "HUGE FIGHT! Soul pushes wounded Godlike. Mortal flanks, gets 2 kills. Godlike tries to trade but Clutchgod holds angle. 3 Godlike players knocked",
+      "kills": {
+        "Mortal": 2,
+        "Viper": 1,
+        "Clutchgod": 1
+      },
+      "remaining_players": "Soul: 4 alive, Godlike: 1 alive (Jonathan)"
+    },
+    {
+      "time": "18:00",
+      "phase": "Elimination",
+      "type": "team_elimination",
+      "team": "eliminated_godlike",
+      "details": "Jonathan (last man standing) eliminated by Team Orangutan. Godlike finishes 5th place with 9 kills",
+      "placement": "5th",
+      "total_kills": 9,
+      "placement_points": 7,
+      "kill_points": 9
+    },
+    {
+      "time": "19:15",
+      "zone": "Zone 5",
+      "type": "final_circles",
+      "details": "5 teams remaining, 16 players alive. Zone 5 in open field near Primorsk road"
+    },
+    {
+      "time": "20:30",
+      "phase": "End Game",
+      "type": "zone_fight",
+      "team": "team_a",
+      "details": "Soul holds center rock cover. Trades shots with Team Orangutan. Regaltos Groza sprays, 1 knock"
+    },
+    {
+      "time": "21:45",
+      "zone": "Zone 6",
+      "type": "final_zone",
+      "details": "Zone 6 - Final moving zones begin. 4 teams, 13 players. Soul still has all 4 members"
+    },
+    {
+      "time": "22:20",
+      "phase": "Final Fight",
+      "type": "multi_team_fight",
+      "details": "Chaos! 4 teams fighting. Skylightz eliminated. Team Orangutan down to 1. 3 teams remaining"
+    },
+    {
+      "time": "23:10",
+      "phase": "Final 3",
+      "type": "positioning",
+      "team": "team_a",
+      "details": "Soul vs Orangutan vs Entity Gaming. Soul has high ground advantage on small hill"
+    },
+    {
+      "time": "23:45",
+      "phase": "Zone 7",
+      "type": "zone_damage",
+      "details": "Zone damage increasing. Entity forced to push. Mortal spots them rotating"
+    },
+    {
+      "time": "24:10",
+      "phase": "Final Fight",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "Entity pushes Soul's position. Viper holds stairs, knocks 2. Mortal finishes with frags. Entity eliminated (7 alive)",
+      "kills": {
+        "Viper": 2,
+        "Mortal": 1
+      }
+    },
+    {
+      "time": "24:40",
+      "phase": "Final 1v4",
+      "type": "final_fight",
+      "winner": "team_a",
+      "details": "Soul (4 players) vs Team Orangutan (1 player). Orangutan tries to hide in smoke but zone forces fight"
+    },
+    {
+      "time": "25:05",
+      "phase": "Chicken Dinner",
+      "type": "victory",
+      "team": "team_a",
+      "details": "TEAM SOUL WINS! Regaltos secures final kill on Orangutan's last player. All 4 Soul members alive!",
+      "highlight": true
+    }
+  ],
+  "final_stats": {
+    "winner": "Team Soul",
+    "placement": 1,
+    "team_soul": {
+      "placement": "1st",
+      "kills": 15,
+      "damage": 3240,
+      "survival_time": "25:05",
+      "placement_points": 10,
+      "kill_points": 15,
+      "total_points": 25,
+      "players_alive_at_end": 4,
+      "individual_kills": {
+        "Mortal": 6,
+        "Viper": 5,
+        "Regaltos": 3,
+        "Clutchgod": 1
+      }
+    },
+    "godlike": {
+      "placement": "5th",
+      "kills": 9,
+      "damage": 1850,
+      "survival_time": "18:00",
+      "placement_points": 7,
+      "kill_points": 9,
+      "total_points": 16,
+      "individual_kills": {
+        "Jonathan": 3,
+        "Zgod": 4,
+        "Clutch": 1,
+        "Neyoo": 1
+      }
+    },
+    "top_5_teams": [
+      {"rank": 1, "team": "Team Soul", "kills": 15, "points": 25},
+      {"rank": 2, "team": "Team Orangutan", "kills": 12, "points": 20},
+      {"rank": 3, "team": "Entity Gaming", "kills": 8, "points": 14},
+      {"rank": 4, "team": "Skylightz Gaming", "kills": 6, "points": 11},
+      {"rank": 5, "team": "Godlike Esports", "kills": 9, "points": 16}
+    ]
+  },
+  "key_moments": [
+    {
+      "timestamp": "2:45",
+      "description": "Godlike wins contested hot drop vs XSpark in Rozhok",
+      "impact": "Early loot advantage and confidence boost"
+    },
+    {
+      "timestamp": "5:30",
+      "description": "Soul third-parties Mylta fight, Mortal double Kar98 headshots",
+      "impact": "Soul gains momentum and better loot"
+    },
+    {
+      "timestamp": "9:30",
+      "description": "Soul secures center compound in zone 3",
+      "impact": "Prime positioning for end-game, huge strategic advantage"
+    },
+    {
+      "timestamp": "17:35",
+      "description": "Soul eliminates Godlike in rotating fight",
+      "impact": "Major competitor removed, Soul's path to victory cleared"
+    },
+    {
+      "timestamp": "24:10",
+      "description": "Soul eliminates Entity in final 3 scenario",
+      "impact": "Guaranteed top 2 finish, chicken dinner within reach"
+    }
+  ],
+  "tactical_notes": {
+    "team_soul_strategy": "Soul played zone-centric strategy perfectly. Early Pochinki loot, vehicle rotations, center compound control in mid-game, and disciplined gatekeeping in late circles. Mortal's IGL calls were spot-on for positioning.",
+    "godlike_strategy": "Godlike played aggressively early (won hot drop) and mid-game (8 kills by zone 3). However, bad zone RNG in zone 4-5 forced unfavorable rotation that exposed them to Soul's gatekeep.",
+    "winning_factors": [
+      "Superior positioning and zone rotations",
+      "Excellent compound control in zone 3-4",
+      "Disciplined team fighting and trading",
+      "Mortal's IGL decisions and fragging ability",
+      "All 4 players maintaining utility and health for final zones"
+    ],
+    "godlike_mistakes": [
+      "Forced to rotate through open field in zone 4",
+      "Lost position advantage after zone shift",
+      "Took unnecessary damage before final rotation",
+      "Should have used more smokes during rotation"
+    ]
+  },
+  "weapons_used": {
+    "most_kills_weapon": "M416 (6 kills)",
+    "most_damage_weapon": "Kar98k (1240 damage)",
+    "notable_weapons": [
+      "Regaltos AWM - 3 kills, crucial gatekeeping downs",
+      "Mortal Kar98k - 4 kills, 2 double headshot scenarios",
+      "Viper AKM - 3 kills in close-range fights",
+      "Zgod AKM - 4 kills including 3-man spray"
+    ]
+  },
+  "circle_luck_analysis": {
+    "team_soul_luck": "Excellent - 4/6 zones favored their position",
+    "godlike_luck": "Poor - Zone 4 and 5 shifts forced bad rotations",
+    "impact": "Zone RNG was significant factor. Soul had to rotate <200m total in zones 3-5, while Godlike had to cover 500m+ under pressure"
+  },
+  "commentary": "This BMPS Season 3 Grand Finals match on Erangel was a masterclass from Team Soul. Their game plan was executed to perfection: secure Pochinki for good loot, rotate early with vehicles, claim center compound in zone 3, and gatekeep aggressively in late game.\n\nThe match featured an epic showdown between India's two biggest BGMI organizations - Team Soul and Godlike Esports. Godlike started strong, winning their contested drop at Rozhok and racking up 8 kills by mid-game. Jonathan and Zgod were fragging hard, and it looked like Godlike might challenge for the win.\n\nHowever, the critical turning point came at 17:35 when zone RNG forced Godlike into an unfavorable rotation. Soul, positioned perfectly in the center, gatekept expertly. Mortal's flanking play and Viper's sprays devastated Godlike, eliminating them in 5th place despite their 9 kills.\n\nFrom that moment, Soul controlled the match. They held high ground through zones 5-7, traded effectively with the remaining teams, and entered the final circles with all 4 members alive and full utility. The decisive moment came when they eliminated Entity Gaming in a 4v3 situation, leaving just Team Orangutan's solo player.\n\nMortal's IGL calls were exceptional throughout - every rotation was timed perfectly, every compound hold was disciplined. Regaltos' AWM play in zone 4-5 gatekeeping was crucial, securing key knocks that prevented teams from challenging Soul's position. Viper's aggressive pushes in final zones sealed multiple team wipes.\n\nSoul finished with 15 kills and chicken dinner, earning maximum 25 points. This dominant performance, combined with consistent top-5 finishes across other matches, helped Team Soul claim the BMPS Season 3 championship.\n\nKey Lesson: In BGMI competitive, positioning > kills. Godlike had similar kills to Soul in early-mid game but lost due to poor final zone positions. Soul's patience and zone-reading won them the match."
+}

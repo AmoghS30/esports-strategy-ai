@@ -1,0 +1,105 @@
+{
+  "match_id": "OW2_OWL_2024_PLAYOFFS_R1",
+  "game": "Overwatch 2",
+  "tournament": "Overwatch League 2024 Playoffs - Round 1",
+  "date": "2024-07-22",
+  "map": "King's Row",
+  "game_mode": "Hybrid",
+  "teams": {
+    "team_a": "San Francisco Shock",
+    "team_b": "Seoul Dynasty"
+  },
+  "hero_picks": {
+    "team_a": ["Reinhardt", "Zarya", "Genji", "Tracer", "Ana", "Lucio"],
+    "team_b": ["Winston", "D.Va", "Soldier:76", "Reaper", "Moira", "Brigitte"]
+  },
+  "events": [
+    {
+      "time": "0:15",
+      "phase": "Attack - Point A",
+      "type": "first_pick",
+      "team": "team_a",
+      "details": "Shock Tracer gets pick on Dynasty support, opening push"
+    },
+    {
+      "time": "0:45",
+      "phase": "Attack - Point A",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "Shock wins fight 6-2, Genji blade gets 3k, Point A captured",
+      "ult_usage": "Genji Blade, Zarya Grav, Ana Nano"
+    },
+    {
+      "time": "1:20",
+      "phase": "Payload Push",
+      "type": "team_fight",
+      "winner": "team_b",
+      "details": "Dynasty holds first checkpoint with Reaper death blossom",
+      "ult_usage": "Reaper Blossom, Winston Primal Rage"
+    },
+    {
+      "time": "2:10",
+      "phase": "Payload Push",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "Shock takes second checkpoint, Reinhardt shatters 4",
+      "ult_usage": "Reinhardt Shatter, Ana Nano, Lucio Beat"
+    },
+    {
+      "time": "3:05",
+      "phase": "Final Push",
+      "type": "overtime_fight",
+      "winner": "team_a",
+      "details": "Shock completes in overtime! Payload reaches end, time: 3:45",
+      "ult_usage": "Zarya Grav, Genji Blade, Ana Nano Blade combo"
+    },
+    {
+      "time": "4:00",
+      "phase": "Defense",
+      "type": "role_swap",
+      "details": "Sides swap - Dynasty attacks, Shock defends"
+    },
+    {
+      "time": "4:30",
+      "phase": "Defense - Point A",
+      "type": "team_fight",
+      "winner": "team_b",
+      "details": "Dynasty takes Point A faster, Winston dive kills both supports",
+      "ult_usage": "Winston Primal, Moira Coalescence"
+    },
+    {
+      "time": "5:15",
+      "phase": "Defense - Checkpoint 1",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "Shock holds at first checkpoint, defensive positioning wins",
+      "ult_usage": "Reinhardt Shatter, Zarya Grav"
+    },
+    {
+      "time": "5:50",
+      "phase": "Defense - Checkpoint 1",
+      "type": "team_fight",
+      "winner": "team_b",
+      "details": "Dynasty breaks through second attempt, Reaper carry",
+      "ult_usage": "Reaper Blossom, D.Va Bomb zones Shock"
+    },
+    {
+      "time": "6:40",
+      "phase": "Defense - Final Push",
+      "type": "team_fight",
+      "winner": "team_a",
+      "details": "SHOCK HOLDS! Dynasty gets payload to 1m from end but time expires",
+      "result": "Shock wins 100% to 99.5%"
+    }
+  ],
+  "final_stats": {
+    "winner": "San Francisco Shock",
+    "team_a_completion": "100%",
+    "team_b_completion": "99.5%",
+    "team_a_time": "3:45",
+    "team_b_time": "Incomplete",
+    "mvp": "Shock Genji player",
+    "final_blow_difference": "1 meter"
+  },
+  "commentary": "This King's Row match was an absolute nail-biter that came down to literally one meter. San Francisco Shock attacked first, completing the map in 3:45 after a clutch overtime push. The Genji-Zarya-Ana combo proved devastating in teamfights.\n\nDynasty's attack started strong, capturing Point A even faster than Shock. Their Winston dive composition created chaos in Shock's backline, and it looked like they would complete with time to spare.\n\nHowever, Shock's defense at the second checkpoint was heroic. Multiple defensive stands slowed Dynasty's progress, though they eventually broke through. The final stretch became a desperate push as time ticked down.\n\nIn the final 30 seconds, Dynasty's payload was one meter—literally ONE METER—from the finish line when time expired. Shock's Reinhardt tanked the payload, refusing to let it move, while their DPS eliminated Dynasty's overtime touches.\n\nThis match showcases Overwatch 2 at its most intense—perfect ultimate combos, incredible individual mechanics, and teamwork under pressure. The 1-meter difference will haunt Dynasty, but demonstrates how every second matters in OW2."
+}
