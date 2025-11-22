@@ -1,0 +1,423 @@
+{
+  "match_id": "COC_CWL_CHAMPS1_2024_WAR3",
+  "game": "Clash of Clans",
+  "tournament": "Clan War League - Champions League I",
+  "war_type": "15v15 Clan War",
+  "date": "2024-11-10",
+  "war_duration": "24 hours",
+  "teams": {
+    "team_a": "Nova Esports",
+    "team_b": "Tribe Gaming"
+  },
+  "clan_details": {
+    "nova_esports": {
+      "clan_level": 23,
+      "war_wins": 487,
+      "war_league": "Champions League I",
+      "total_members": 50,
+      "war_participants": 15
+    },
+    "tribe_gaming": {
+      "clan_level": 22,
+      "war_wins": 512,
+      "war_league": "Champions League I", 
+      "total_members": 50,
+      "war_participants": 15
+    }
+  },
+  "base_composition": {
+    "town_hall_levels": {
+      "nova_esports": ["TH16", "TH16", "TH16", "TH16", "TH16", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH14", "TH14"],
+      "tribe_gaming": ["TH16", "TH16", "TH16", "TH16", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH15", "TH14"]
+    }
+  },
+  "hero_picks": {
+    "team_a": ["Royal Champion", "Archer Queen", "Barbarian King", "Grand Warden", "Battle Machine"],
+    "team_b": ["Royal Champion", "Archer Queen", "Barbarian King", "Grand Warden", "Battle Machine"]
+  },
+  "popular_attack_strategies": {
+    "nova_esports": ["Queen Charge Hybrid", "Blizzard Lalo", "Root Rider Smash", "Super Witch Smash", "Electrone Lalo"],
+    "tribe_gaming": ["Queen Charge Hybrid", "Blizzard Lalo", "Yeti Smash", "Root Rider Spam", "Electrone Lalo"]
+  },
+  "events": [
+    {
+      "time": "0:00",
+      "phase": "Preparation Day Start",
+      "type": "war_declared",
+      "details": "War matched! Nova Esports vs Tribe Gaming. 24-hour preparation phase begins"
+    },
+    {
+      "time": "2:30",
+      "phase": "Preparation Day",
+      "type": "base_layout_set",
+      "team": "team_a",
+      "details": "Nova sets anti-2 star bases. Strong ring bases for TH16s, compact anti-Queen Charge layouts"
+    },
+    {
+      "time": "3:15",
+      "phase": "Preparation Day",
+      "type": "base_layout_set",
+      "team": "team_b",
+      "details": "Tribe Gaming opts for anti-3 star layouts. Island bases for TH16, spread layouts for lower THs"
+    },
+    {
+      "time": "12:00",
+      "phase": "Preparation Day",
+      "type": "strategy_discussion",
+      "details": "Both clans scout bases, plan attacks. Nova identifies Tribe's #1 and #2 as vulnerable to Blizzard"
+    },
+    {
+      "time": "23:45",
+      "phase": "Preparation Day End",
+      "type": "prep_complete",
+      "details": "Preparation day ends. Attacks can now begin. War runs for 24 hours"
+    },
+    {
+      "time": "24:00",
+      "phase": "Battle Day - Hour 1",
+      "type": "war_start",
+      "details": "BATTLE DAY BEGINS! Nova and Tribe can now attack. 15v15 war, each player gets 2 attacks"
+    },
+    {
+      "time": "24:15",
+      "phase": "Early Attacks",
+      "type": "first_attack",
+      "team": "team_a",
+      "attacker": "Nova #7 (TH15)",
+      "defender": "Tribe #15 (TH14)",
+      "result": "3-star",
+      "strategy": "Queen Charge Hybrid",
+      "details": "Nova's #7 opens war with perfect 3-star on Tribe's #15. Clean funnel, great execution",
+      "stars": 3,
+      "destruction": "100%"
+    },
+    {
+      "time": "24:30",
+      "phase": "Early Attacks",
+      "type": "attack",
+      "team": "team_b",
+      "attacker": "Tribe #12 (TH15)",
+      "defender": "Nova #10 (TH15)",
+      "result": "2-star",
+      "strategy": "Blizzard Lalo",
+      "details": "Tribe's #12 gets 2-star 78% on Nova #10. Invisibility Spell timing off, Loons killed early",
+      "stars": 2,
+      "destruction": "78%"
+    },
+    {
+      "time": "25:00",
+      "phase": "Early Attacks",
+      "type": "mirror_hit",
+      "team": "team_a",
+      "attacker": "Nova #12 (TH15)",
+      "defender": "Tribe #12 (TH15)",
+      "result": "3-star",
+      "strategy": "Root Rider Smash",
+      "details": "Nova #12 3-stars Tribe #12 mirror. Perfect Earthquake placement, Root Riders dominate",
+      "stars": 3,
+      "destruction": "100%"
+    },
+    {
+      "time": "26:15",
+      "phase": "Lower Hits",
+      "type": "attack_sequence",
+      "details": "Nova clears bottom 5 bases (11-15) with all 3-stars. Tribe gets 3/5 three-stars on their bottom bases"
+    },
+    {
+      "time": "28:00",
+      "phase": "Hour 4",
+      "type": "scoreboard_update",
+      "details": "Score after 4 hours: Nova 25 stars, Tribe 20 stars. Nova leading by 5 stars"
+    },
+    {
+      "time": "30:00",
+      "phase": "Mid-War Push",
+      "type": "critical_attack",
+      "team": "team_b",
+      "attacker": "Tribe #3 (TH16) - Lenaide",
+      "defender": "Nova #2 (TH16)",
+      "result": "3-star",
+      "strategy": "Queen Charge Hybrid with Electrone",
+      "details": "HUGE! Tribe's Lenaide 3-stars Nova's #2 base (considered one of hardest). Perfect Queen Charge into core, Hybrid cleanup",
+      "stars": 3,
+      "destruction": "100%",
+      "highlight": true
+    },
+    {
+      "time": "31:30",
+      "phase": "Mid-War Response",
+      "type": "critical_attack",
+      "team": "team_a",
+      "attacker": "Nova #2 (TH16) - iTzu",
+      "defender": "Tribe #1 (TH16)",
+      "result": "2-star",
+      "strategy": "Blizzard Lalo",
+      "details": "Nova's iTzu attempts Tribe's #1 but gets only 2-star 87%. Invisibility Spell miscalculation, defensive Eagle Artillery destroys Loons",
+      "stars": 2,
+      "destruction": "87%",
+      "highlight": true
+    },
+    {
+      "time": "33:00",
+      "phase": "Hour 9",
+      "type": "scoreboard_update",
+      "details": "Score: Nova 37 stars, Tribe 35 stars. War extremely close! Only 2-star difference"
+    },
+    {
+      "time": "35:00",
+      "phase": "Top Base Push",
+      "type": "attack",
+      "team": "team_b",
+      "attacker": "Tribe #5 (TH15)",
+      "defender": "Nova #5 (TH15)",
+      "result": "3-star",
+      "strategy": "Yeti Smash",
+      "details": "Tribe's #5 3-stars Nova mirror. Yeti-Bowler-Witch composition overwhelms base",
+      "stars": 3,
+      "destruction": "100%"
+    },
+    {
+      "time": "36:45",
+      "phase": "Turning Point",
+      "type": "critical_dip",
+      "team": "team_a",
+      "attacker": "Nova #4 (TH16) - Judo Sloth",
+      "defender": "Tribe #3 (TH16)",
+      "result": "3-star",
+      "strategy": "Super Witch Smash",
+      "details": "TURNING POINT! Nova's Judo Sloth dips down to 3-star Tribe's #3. Massive percentage gain. Perfect Log Launcher pathing",
+      "stars": 3,
+      "destruction": "100%",
+      "highlight": true
+    },
+    {
+      "time": "38:00",
+      "phase": "Hour 14",
+      "type": "scoreboard_update",
+      "details": "Score: Nova 41 stars, Tribe 40 stars. Nova barely holding 1-star lead"
+    },
+    {
+      "time": "40:00",
+      "phase": "Cleanup Attacks",
+      "type": "second_attacks_begin",
+      "details": "Players begin using second attacks for cleanup and percentage hunting"
+    },
+    {
+      "time": "41:30",
+      "phase": "Late War",
+      "type": "attack",
+      "team": "team_b",
+      "attacker": "Tribe #8 (TH15)",
+      "defender": "Nova #4 (TH16)",
+      "result": "1-star",
+      "strategy": "Electrone Lalo",
+      "details": "Tribe #8 attempts dip attack on Nova #4 (TH16) but gets only 1-star 62%. Failed to reach TH",
+      "stars": 1,
+      "destruction": "62%"
+    },
+    {
+      "time": "42:00",
+      "phase": "Late War",
+      "type": "percentage_battle",
+      "details": "Both clans focus on maximizing destruction percentage for tiebreaker scenarios"
+    },
+    {
+      "time": "43:15",
+      "phase": "Critical Moment",
+      "type": "attack",
+      "team": "team_a",
+      "attacker": "Nova #1 (TH16) - Klaus",
+      "defender": "Tribe #1 (TH16)",
+      "result": "3-star",
+      "strategy": "Blizzard Lalo (Second Attempt)",
+      "details": "CLUTCH! Nova's Klaus 3-stars Tribe's #1 on second attack! Perfect Invisibility Spell timing, Loons survive to clean up",
+      "stars": 3,
+      "destruction": "100%",
+      "highlight": true
+    },
+    {
+      "time": "44:00",
+      "phase": "Hour 20",
+      "type": "scoreboard_update",
+      "details": "Score: Nova 44 stars, Tribe 43 stars. Nova extends lead to 1 star with 4 hours remaining"
+    },
+    {
+      "time": "45:30",
+      "phase": "Final Push",
+      "type": "attack",
+      "team": "team_b",
+      "attacker": "Tribe #6 (TH15)",
+      "defender": "Nova #8 (TH15)",
+      "result": "3-star",
+      "strategy": "Root Rider Spam",
+      "details": "Tribe's #6 secures 3-star on Nova #8. Clean attack, TH destroyed in 2:15",
+      "stars": 3,
+      "destruction": "100%"
+    },
+    {
+      "time": "46:00",
+      "phase": "Final 2 Hours",
+      "type": "cleanup_focus",
+      "details": "Both clans use remaining attacks for percentage optimization. Every percent matters for potential tiebreaker"
+    },
+    {
+      "time": "47:00",
+      "phase": "Final Hour",
+      "type": "attack",
+      "team": "team_a",
+      "attacker": "Nova #9 (TH15)",
+      "defender": "Tribe #7 (TH15)",
+      "result": "3-star",
+      "strategy": "Queen Charge Hybrid",
+      "details": "Nova #9 adds another 3-star. Nova pulling ahead in final hour",
+      "stars": 3,
+      "destruction": "100%"
+    },
+    {
+      "time": "47:30",
+      "phase": "Final 30 Minutes",
+      "type": "last_attacks",
+      "details": "Final attacks being launched. Tribe needs stars, Nova playing defensive with percentage attacks"
+    },
+    {
+      "time": "47:50",
+      "phase": "Final Attack",
+      "type": "attack",
+      "team": "team_b",
+      "attacker": "Tribe #4 (TH16)",
+      "defender": "Nova #6 (TH15)",
+      "result": "3-star",
+      "strategy": "Super Witch Smash",
+      "details": "Tribe's #4 dips for guaranteed 3-star. Closes gap but not enough",
+      "stars": 3,
+      "destruction": "100%"
+    },
+    {
+      "time": "48:00",
+      "phase": "War End",
+      "type": "war_complete",
+      "details": "WAR ENDS! Final scores tallied. All attacks used"
+    }
+  ],
+  "final_stats": {
+    "winner": "Nova Esports",
+    "final_score": {
+      "nova_esports": {
+        "total_stars": 45,
+        "total_destruction": "1425%",
+        "average_destruction": "95.0%",
+        "three_stars": 14,
+        "two_stars": 1,
+        "one_star": 0,
+        "attacks_used": "30/30"
+      },
+      "tribe_gaming": {
+        "total_stars": 44,
+        "total_destruction": "1398%",
+        "average_destruction": "93.2%",
+        "three_stars": 13,
+        "two_stars": 2,
+        "one_star": 0,
+        "attacks_used": "30/30"
+      }
+    },
+    "star_difference": 1,
+    "destruction_difference": "27%",
+    "war_weight": "High (TH16-heavy matchup)",
+    "perfect_wars": "No (both clans missed 3-stars on some bases)"
+  },
+  "individual_performances": {
+    "mvp_nova": {
+      "player": "Klaus (Nova #1)",
+      "performance": "3-star on Tribe #1 (hardest base) on second attempt. Clutch performance",
+      "stars_earned": 6,
+      "destruction": "200%"
+    },
+    "mvp_tribe": {
+      "player": "Lenaide (Tribe #3)",
+      "performance": "3-star on Nova #2 (very difficult base). Kept Tribe in the war",
+      "stars_earned": 6,
+      "destruction": "200%"
+    },
+    "top_performers": [
+      {"player": "Judo Sloth (Nova #4)", "stars": 6, "destruction": "200%", "highlight": "Dipped for critical 3-star"},
+      {"player": "iTzu (Nova #2)", "stars": 5, "destruction": "187%", "highlight": "Strong but missed 3-star on #1"},
+      {"player": "Lenaide (Tribe #3)", "stars": 6, "destruction": "200%", "highlight": "MVP performance"},
+      {"player": "Tribe #4", "stars": 6, "destruction": "200%", "highlight": "Clutch dip attacks"}
+    ]
+  },
+  "attack_strategy_breakdown": {
+    "most_used_strategy": "Queen Charge Hybrid (8 attacks)",
+    "highest_success_rate": "Root Rider Smash (100% 3-star rate, 4/4 attacks)",
+    "most_failed_strategy": "Blizzard Lalo (2/6 attacks failed to 3-star)",
+    "strategy_stats": {
+      "queen_charge_hybrid": {"used": 8, "three_stars": 6, "success_rate": "75%"},
+      "blizzard_lalo": {"used": 6, "three_stars": 4, "success_rate": "67%"},
+      "root_rider_smash": {"used": 4, "three_stars": 4, "success_rate": "100%"},
+      "super_witch_smash": {"used": 5, "three_stars": 5, "success_rate": "100%"},
+      "yeti_smash": {"used": 4, "three_stars": 3, "success_rate": "75%"},
+      "electrone_lalo": {"used": 3, "three_stars": 2, "success_rate": "67%"}
+    }
+  },
+  "key_moments": [
+    {
+      "timestamp": "30:00",
+      "description": "Tribe's Lenaide 3-stars Nova's #2 base (very difficult)",
+      "impact": "Kept Tribe competitive, showed Nova's top bases were attackable"
+    },
+    {
+      "timestamp": "31:30",
+      "description": "Nova's iTzu fails to 3-star Tribe's #1, only gets 2-star 87%",
+      "impact": "Missed opportunity for Nova to pull ahead decisively"
+    },
+    {
+      "timestamp": "36:45",
+      "description": "Nova's Judo Sloth dips to 3-star Tribe's #3",
+      "impact": "TURNING POINT - Strategic dip attack gave Nova crucial star advantage"
+    },
+    {
+      "timestamp": "43:15",
+      "description": "Nova's Klaus 3-stars Tribe's #1 on second attack",
+      "impact": "Sealed the victory for Nova, eliminated Tribe's toughest base"
+    }
+  ],
+  "tactical_notes": {
+    "nova_strategy": "Nova played aggressive with dip attacks (higher TH attacking lower TH) to secure guaranteed 3-stars. Strong on cleanup, maximized destruction percentage. Klaus's second attack on Tribe #1 was war-winning decision.",
+    "tribe_strategy": "Tribe focused on mirror hits and percentage battles. Lenaide's heroics kept them close, but lack of dip attacks hurt them. Missed 3-stars on key bases (Nova #2, #4) proved costly.",
+    "winning_factors": [
+      "Nova's willingness to dip attack for guaranteed stars",
+      "Better second attack usage for cleanup and tough bases",
+      "Klaus's clutch 3-star on Tribe's #1 in final hours",
+      "Superior Root Rider Smash execution (100% success)",
+      "Better percentage management throughout war"
+    ],
+    "tribe_mistakes": [
+      "Too conservative with dip attacks early",
+      "Blizzard Lalo timing issues (missed 3-stars)",
+      "Failed to secure Nova's top 2 bases when attempted",
+      "Lower average destruction percentage cost tiebreaker potential"
+    ]
+  },
+  "base_design_analysis": {
+    "effective_bases": [
+      "Nova #1 (TH16) - Held until Klaus's second attack, anti-Blizzard design",
+      "Tribe #1 (TH16) - Held until Klaus clutch attack, strong core",
+      "Nova #4 (TH16) - Held against dip attempt, caused 1-star fail"
+    ],
+    "vulnerable_bases": [
+      "Tribe #12-15 (TH15/14) - All 3-starred easily",
+      "Nova #10-15 (TH15/14) - Mostly 3-starred, weak anti-Hybrid",
+      "Tribe #3 (TH16) - Vulnerable to Super Witch Smash dip"
+    ]
+  },
+  "clan_war_league_context": {
+    "league": "Champions League I",
+    "war_number": "War 3 of 7",
+    "standings_impact": "Critical win for Nova, keeps them in top 3 for promotion/prizes",
+    "bonus_medals": {
+      "nova_esports": "+335 League Medals (winner)",
+      "tribe_gaming": "+285 League Medals"
+    }
+  },
+  "commentary": "This Champions League I war between Nova Esports and Tribe Gaming was an absolute nail-biter that came down to a single star difference. Both clans are considered among the world's best, and this war showcased why.\n\nThe war started evenly, with both clans efficiently clearing their bottom bases. The first major moment came at the 4-hour mark when Nova held a 5-star lead, but Tribe's Lenaide delivered a game-changing 3-star on Nova's #2 base - a base many thought was impossible to triple.\n\nNova's iTzu responded by attempting Tribe's #1 base but could only manage 2-stars at 87%. This missed 3-star would prove crucial. The war remained incredibly close, with scores tied or within 1-2 stars for most of the battle day.\n\nThe true turning point came at 36:45 when Nova's Judo Sloth made the strategic decision to 'dip' - attacking Tribe's #3 base (lower than his #4 position) to secure a guaranteed 3-star with Super Witch Smash. This attack showed Nova's tactical maturity - they were willing to sacrifice 'honor' (mirror hits) for guaranteed stars.\n\nAs the war entered its final hours, Nova led by just 1 star. Tribe pushed hard with their remaining attacks, but Nova's Klaus delivered the decisive blow - a perfect Blizzard Lalo 3-star on Tribe's #1 base using his second attack. This was the clutch performance Nova needed.\n\nThe final score of 45-44 stars (1 star difference, 27% destruction advantage) showcases how evenly matched these clans are. Nova's superior dip attack strategy and Klaus's heroics secured the win.\n\nKey Lessons:\n1. In close wars, strategic dip attacks for guaranteed stars > risking mirror fails\n2. Second attacks should target difficult bases, not just cleanup\n3. Destruction percentage matters for tiebreakers - every percent counts\n4. Root Rider and Super Witch strategies proved most consistent (100% success rates)\n5. Mental fortitude in final hours crucial - Klaus's pressure 3-star won the war\n\nThis war exemplifies top-tier Clash of Clans competitive play - perfect execution, strategic depth, and clutch performances under pressure."
+}

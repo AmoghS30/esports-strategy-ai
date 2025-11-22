@@ -1,0 +1,47 @@
+{
+  "match_id": "lcs_finals_2024_g1",
+  "game": "League of Legends",
+  "teams": {
+    "team_a": "Cloud9",
+    "team_b": "Team Liquid"
+  },
+  "duration_minutes": 35,
+  "winner": "team_a",
+  "stats": {
+    "kills": {"team_a": 22, "team_b": 15},
+    "towers": {"team_a": 9, "team_b": 3},
+    "dragons": {"team_a": 4, "team_b": 2},
+    "barons": {"team_a": 1, "team_b": 0},
+    "gold": {"team_a": 65200, "team_b": 58100},
+    "gold_diff_at_15": -1500,
+    "first_blood": "team_b",
+    "first_tower": "team_b"
+  },
+  "compositions": {
+    "team_a": {
+      "top": "Gnar",
+      "jungle": "Lee Sin",
+      "mid": "Azir",
+      "adc": "Jinx",
+      "support": "Thresh"
+    },
+    "team_b": {
+      "top": "Renekton",
+      "jungle": "Viego",
+      "mid": "Viktor",
+      "adc": "Kai'Sa",
+      "support": "Nautilus"
+    }
+  },
+  "key_events": [
+    {"time": "5:15", "type": "first_blood", "team": "team_b", "description": "Viego ganks mid, kills Azir"},
+    {"time": "7:00", "type": "dragon", "team": "team_b", "description": "Mountain Drake secured"},
+    {"time": "10:30", "type": "tower", "team": "team_b", "description": "First tower mid lane"},
+    {"time": "18:00", "type": "teamfight", "team": "team_a", "description": "Azir shuffle catches 3, C9 wins 4-1 at dragon"},
+    {"time": "22:00", "type": "dragon", "team": "team_a", "description": "Ocean Drake after skirmish win"},
+    {"time": "25:30", "type": "baron", "team": "team_a", "description": "Thresh hook on Viego leads to Baron"},
+    {"time": "32:00", "type": "dragon_soul", "team": "team_a", "description": "Infernal Soul secured"},
+    {"time": "35:00", "type": "game_end", "team": "team_a", "description": "Jinx pentakill ends the game"}
+  ],
+  "transcript": "Caster 1: Welcome to the LCS Finals! Cloud9 vs Team Liquid!\nCaster 2: C9 drafts scaling with Jinx and Azir. Liquid goes early game.\nCaster 1: 5 minutes in, first blood to Liquid! Viego catches Azir.\nCaster 2: Liquid is executing their gameplan perfectly.\nCaster 1: 15 minutes, Liquid leads by 1500 gold.\nCaster 2: But here comes the dragon fight!\nCaster 1: AZIR SHUFFLE! He catches THREE members!\nCaster 2: Cloud9 wins the fight 4-1! What a turnaround!\nCaster 1: 25 minutes, Baron is up. Thresh lands the hook!\nCaster 2: That's Baron for Cloud9! The comeback is real!\nCaster 1: Dragon Soul to Cloud9! They push for the win!\nCaster 2: PENTAKILL! Jinx cleans up! Cloud9 wins!"
+}
