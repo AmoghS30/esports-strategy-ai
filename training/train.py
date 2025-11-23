@@ -1,14 +1,13 @@
 """
-M4 Pro Optimized Training Script
-Maximum speed optimizations for Apple Silicon M4
+AWS GPU Optimized Training Script
+Optimized for g5.2xlarge (NVIDIA A10G GPU)
 
 Key optimizations:
-- Smaller, faster models
-- Optimized batch sizes for M4
-- Better MPS utilization
-- Memory-efficient processing
-- Faster tokenization
-- Fixed macOS multiprocessing issues
+- CUDA acceleration
+- Larger batch sizes for GPU
+- Mixed precision training (FP16)
+- Faster data loading
+- Optimized for cloud GPU instances
 """
 
 import os
@@ -35,87 +34,98 @@ from tqdm import tqdm
 
 
 # ============================================================
-# M4 Pro Optimized Models - FASTEST
+# GPU Optimized Models
 # ============================================================
 MODELS = {
     "tinyllama": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",  # 1.1B - FASTEST ⚡
     "phi-2": "microsoft/phi-2",                          # 2.7B - Good speed/quality
     "qwen-0.5b": "Qwen/Qwen2-0.5B-Instruct",           # 0.5B - ULTRA FAST
     "stablelm-2": "stabilityai/stablelm-2-1_6b",       # 1.6B - Fast & good
+    "phi-3": "microsoft/Phi-3-mini-4k-instruct",       # 3.8B - Better quality
 }
 
-# Optimized LoRA targets for speed
+# Optimized LoRA targets
 LORA_TARGETS = {
-    "tinyllama": ["q_proj", "v_proj"],  # Minimal for speed
-    "phi": ["q_proj", "v_proj"],
-    "gemma": ["q_proj", "v_proj"],
-    "qwen": ["q_proj", "v_proj"],
-    "stablelm": ["q_proj", "v_proj"],
+    "tinyllama": ["q_proj", "v_proj", "k_proj", "o_proj"],  # More targets for GPU
+    "phi": ["q_proj", "v_proj", "k_proj", "o_proj"],
+    "gemma": ["q_proj", "v_proj", "k_proj", "o_proj"],
+    "qwen": ["q_proj", "v_proj", "k_proj", "o_proj"],
+    "stablelm": ["q_proj", "v_proj", "k_proj", "o_proj"],
 }
 
 
 @dataclass
-class M4ProConfig:
-    """M4 Pro optimized training configuration."""
+class GPUConfig:
+    """GPU optimized training configuration for g5.2xlarge."""
     # Model
     model_name: str = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
     
-    # M4 Pro optimized settings
+    # GPU optimized settings (g5.2xlarge has 24GB VRAM)
     num_epochs: int = 3
-    batch_size: int = 4  # M4 Pro can handle more
-    gradient_accumulation: int = 2  # Smaller accumulation
-    learning_rate: float = 3e-4  # Slightly higher for faster convergence
-    max_seq_length: int = 384  # Shorter for speed
-    warmup_steps: int = 20  # Less warmup
+    batch_size: int = 16  # GPU can handle much larger batches!
+    gradient_accumulation: int = 2
+    learning_rate: float = 2e-4
+    max_seq_length: int = 512  # Longer sequences on GPU
+    warmup_steps: int = 50
     
-    # LoRA - minimal for speed
-    lora_r: int = 4  # Smaller rank = faster
-    lora_alpha: int = 8
+    # LoRA - can use larger rank on GPU
+    lora_r: int = 16  # Larger rank for better quality
+    lora_alpha: int = 32
     lora_dropout: float = 0.05
     
-    # Speed optimizations
-    use_gradient_checkpointing: bool = False  # Faster without it
+    # GPU optimizations
+    use_gradient_checkpointing: bool = False  # Not needed with 24GB VRAM
     max_grad_norm: float = 1.0
-    dataloader_num_workers: int = 0  # Disable multiprocessing for macOS compatibility
+    dataloader_num_workers: int = 4  # Use parallel data loading
+    use_flash_attention: bool = True  # Enable if available
     
     # Device
-    device: str = "mps"
+    device: str = "cuda"
     
     # Paths
     data_dir: str = "./data/training_data"
-    output_dir: str = "./models/esports-m4-fast"
+    output_dir: str = "./models/esports-gpu-fast"
     
     # Resume
     resume_from: Optional[str] = None
     
-    # Logging - less frequent for speed
-    logging_steps: int = 25
-    save_steps: int = 200
-    eval_steps: int = 200
+    # Logging
+    logging_steps: int = 10
+    save_steps: int = 100
+    eval_steps: int = 100
 
 
-class M4ProTrainer:
-    """M4 Pro optimized trainer with maximum speed."""
+class GPUTrainer:
+    """GPU optimized trainer for AWS instances."""
     
-    def __init__(self, config: M4ProConfig):
+    def __init__(self, config: GPUConfig):
         self.config = config
         self.model = None
         self.tokenizer = None
         self.trainer = None
         
-        # Verify MPS
-        if not torch.backends.mps.is_available():
-            print("⚠️  MPS not available! Using CPU (will be slow)")
-            self.config.device = "cpu"
-        else:
-            print("✅ M4 Pro detected - using MPS acceleration")
-            # Enable MPS optimizations
-            os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
+        # Verify CUDA
+        if not torch.cuda.is_available():
+            print("❌ CUDA not available!")
+            print("   Make sure you're on a GPU instance")
+            sys.exit(1)
+        
+        print("=" * 60)
+        print("   🚀 AWS GPU Training (g5.2xlarge)")
+        print("=" * 60)
+        print(f"\n✅ GPU detected: {torch.cuda.get_device_name(0)}")
+        print(f"   CUDA Version: {torch.version.cuda}")
+        print(f"   GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
+        
+        # Set optimal CUDA settings
+        torch.backends.cuda.matmul.allow_tf32 = True
+        torch.backends.cudnn.allow_tf32 = True
+        torch.backends.cudnn.benchmark = True
         
     def setup_model(self):
-        """Load and prepare model - optimized for speed."""
+        """Load and prepare model - optimized for GPU."""
         print("\n" + "=" * 60)
-        print("   M4 Pro Fast Model Setup")
+        print("   GPU Model Setup")
         print("=" * 60)
         
         print(f"\n📥 Loading model: {self.config.model_name}")
@@ -124,32 +134,34 @@ class M4ProTrainer:
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.config.model_name,
             trust_remote_code=True,
-            use_fast=True  # Use fast tokenizer
+            use_fast=True
         )
         
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
             self.tokenizer.pad_token_id = self.tokenizer.eos_token_id
         
-        # Load model - optimized for MPS
-        print(f"📦 Loading to MPS...")
+        # Load model - optimized for GPU
+        print(f"📦 Loading to GPU...")
         
         self.model = AutoModelForCausalLM.from_pretrained(
             self.config.model_name,
             trust_remote_code=True,
-            torch_dtype=torch.float16,  # Use FP16 for speed
+            torch_dtype=torch.float16,  # FP16 for speed
+            device_map="auto",  # Automatically map to GPU
             low_cpu_mem_usage=True,
         )
         
-        # Move to MPS
-        self.model = self.model.to(self.config.device)
-        
-        print(f"✅ Model loaded!")
+        print(f"✅ Model loaded to GPU!")
         print(f"   Parameters: {self.model.num_parameters():,}")
         print(f"   Size: {self.model.num_parameters() * 2 / 1e9:.2f} GB (FP16)")
         
-        # Setup LoRA - minimal for speed
-        print("\n🔧 Setting up minimal LoRA (for speed)...")
+        # Check GPU memory
+        allocated = torch.cuda.memory_allocated(0) / 1e9
+        print(f"   GPU Memory Used: {allocated:.2f} GB")
+        
+        # Setup LoRA
+        print("\n🔧 Setting up LoRA for GPU...")
         target_modules = self._get_target_modules()
         
         lora_config = LoraConfig(
@@ -169,19 +181,20 @@ class M4ProTrainer:
         
         print(f"✅ LoRA configured!")
         print(f"   Trainable: {trainable_params:,} ({100*trainable_params/total_params:.2f}%)")
+        print(f"   LoRA Rank: {self.config.lora_r} (higher quality)")
     
     def _get_target_modules(self):
-        """Get minimal LoRA target modules for speed."""
+        """Get LoRA target modules."""
         model_lower = self.config.model_name.lower()
         
         for key, targets in LORA_TARGETS.items():
             if key in model_lower:
                 return targets
         
-        return ["q_proj", "v_proj"]  # Minimal default
+        return ["q_proj", "v_proj", "k_proj", "o_proj"]
     
     def load_data(self):
-        """Load and prepare training data - optimized for macOS."""
+        """Load and prepare training data - GPU optimized."""
         print("\n📊 Loading dataset...")
         
         try:
@@ -190,34 +203,34 @@ class M4ProTrainer:
             print(f"   ✓ Validation: {len(dataset['validation']):,} samples")
         except Exception as e:
             print(f"   ❌ Error: {e}")
-            print("   Run: python prepare_data.py --max-samples 5000")
+            print("   Make sure training data is available")
             sys.exit(1)
         
-        # Format prompts - simplified for speed
-        print("📝 Formatting prompts (single process for macOS stability)...")
+        # Format prompts
+        print("📝 Formatting prompts...")
         
         def format_prompt(example):
-            # Simpler format for speed
             if example.get("input", "").strip():
                 text = f"{example['instruction']}\n\n{example['input']}\n\n{example['output']}</s>"
             else:
                 text = f"{example['instruction']}\n\n{example['output']}</s>"
             return {"text": text}
         
-        # Single process to avoid macOS multiprocessing issues
         train_formatted = dataset['train'].map(
             format_prompt, 
             remove_columns=dataset['train'].column_names,
-            desc="Formatting train"
+            desc="Formatting train",
+            num_proc=4  # Parallel processing on Linux
         )
         val_formatted = dataset['validation'].map(
             format_prompt, 
             remove_columns=dataset['validation'].column_names,
-            desc="Formatting validation"
+            desc="Formatting validation",
+            num_proc=4
         )
         
-        # Tokenize - single process for stability
-        print("🔤 Tokenizing (single process for macOS stability)...")
+        # Tokenize
+        print("🔤 Tokenizing (parallel processing)...")
         
         def tokenize(examples):
             tokenized = self.tokenizer(
@@ -225,17 +238,17 @@ class M4ProTrainer:
                 truncation=True,
                 max_length=self.config.max_seq_length,
                 padding="max_length",
-                return_tensors=None,  # Don't convert to tensors yet
+                return_tensors=None,
             )
             tokenized["labels"] = tokenized["input_ids"].copy()
             return tokenized
         
-        # Use batched processing but single process
         self.train_dataset = train_formatted.map(
             tokenize, 
             batched=True,
-            batch_size=1000,  # Large batches for speed
+            batch_size=1000,
             remove_columns=["text"],
+            num_proc=4,
             desc="Tokenizing train"
         )
         
@@ -244,6 +257,7 @@ class M4ProTrainer:
             batched=True,
             batch_size=1000,
             remove_columns=["text"],
+            num_proc=4,
             desc="Tokenizing validation"
         )
         
@@ -252,15 +266,15 @@ class M4ProTrainer:
         print(f"   Validation: {len(self.val_dataset):,} samples")
     
     def train(self):
-        """Run training - maximum speed optimization."""
+        """Run training - GPU optimized."""
         print("\n" + "=" * 60)
-        print("   M4 Pro Fast Training")
+        print("   🚀 GPU Training Started")
         print("=" * 60)
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_dir = f"{self.config.output_dir}_{timestamp}"
         
-        # M4 Pro optimized training arguments
+        # GPU optimized training arguments
         training_args = TrainingArguments(
             output_dir=output_dir,
             num_train_epochs=self.config.num_epochs,
@@ -270,47 +284,41 @@ class M4ProTrainer:
             learning_rate=self.config.learning_rate,
             warmup_steps=self.config.warmup_steps,
             
-            # Logging - less frequent
+            # Logging
             logging_steps=self.config.logging_steps,
             logging_first_step=True,
             
-            # Evaluation - less frequent
+            # Evaluation
             eval_strategy="steps",
             eval_steps=self.config.eval_steps,
             
-            # Saving - less frequent
+            # Saving
             save_strategy="steps",
             save_steps=self.config.save_steps,
-            save_total_limit=1,  # Keep only 1 checkpoint
+            save_total_limit=2,
             
-            # Speed optimizations - disabled multiprocessing for macOS
+            # GPU optimizations
+            fp16=True,  # Mixed precision training
             dataloader_num_workers=self.config.dataloader_num_workers,
-            dataloader_pin_memory=False,  # Disabled for macOS stability
+            dataloader_pin_memory=True,
+            dataloader_persistent_workers=True,
             
             # Gradient
             max_grad_norm=self.config.max_grad_norm,
             
-            # MPS specific
-            use_cpu=False,
-            no_cuda=True,
-            fp16=True,  # FP16 for speed on MPS
-            
-            # Disable slow features
-            report_to="none",
-            load_best_model_at_end=False,
-            metric_for_best_model=None,
-            greater_is_better=None,
-            
             # Memory optimization
             gradient_checkpointing=self.config.use_gradient_checkpointing,
-            optim="adamw_torch",  # Faster than default
+            optim="adamw_torch_fused",  # Faster fused optimizer
+            
+            # Reporting
+            report_to="none",
+            load_best_model_at_end=False,
             
             # Disable unnecessary features
             push_to_hub=False,
-            hub_strategy="end",
         )
         
-        # Fast data collator
+        # Data collator
         data_collator = DataCollatorForSeq2Seq(
             tokenizer=self.tokenizer,
             model=self.model,
@@ -331,23 +339,24 @@ class M4ProTrainer:
         total_batch = self.config.batch_size * self.config.gradient_accumulation
         total_steps = len(self.train_dataset) * self.config.num_epochs // total_batch
         
-        print(f"\n📊 M4 Pro Fast Configuration:")
+        print(f"\n📊 GPU Training Configuration:")
         print(f"   Model: {self.config.model_name.split('/')[-1]}")
-        print(f"   Device: {self.config.device.upper()}")
+        print(f"   GPU: {torch.cuda.get_device_name(0)}")
         print(f"   Epochs: {self.config.num_epochs}")
         print(f"   Batch size: {self.config.batch_size}")
         print(f"   Gradient accumulation: {self.config.gradient_accumulation}")
         print(f"   Effective batch: {total_batch}")
         print(f"   Sequence length: {self.config.max_seq_length}")
         print(f"   Total steps: {total_steps}")
-        print(f"   LoRA rank: {self.config.lora_r} (minimal for speed)")
+        print(f"   LoRA rank: {self.config.lora_r}")
+        print(f"   Mixed precision: FP16 ✅")
         
-        # Estimate time
+        # Estimate time on g5.2xlarge
         samples_per_sec = {
-            "tinyllama": 12,   # ~12 samples/sec on M4 Pro
-            "qwen-0.5b": 20,   # ~20 samples/sec
-            "stablelm": 10,    # ~10 samples/sec
-            "phi": 6,          # ~6 samples/sec
+            "tinyllama": 80,   # ~80 samples/sec on g5.2xlarge
+            "qwen-0.5b": 120,  # ~120 samples/sec
+            "stablelm": 60,    # ~60 samples/sec
+            "phi": 40,         # ~40 samples/sec
         }
         
         model_key = next((k for k in samples_per_sec.keys() if k in self.config.model_name.lower()), "tinyllama")
@@ -355,14 +364,15 @@ class M4ProTrainer:
         total_samples = len(self.train_dataset) * self.config.num_epochs
         est_time_min = total_samples / est_samples_per_sec / 60
         
-        print(f"\n⏱️  Estimated time on M4 Pro: {est_time_min:.0f} minutes")
+        print(f"\n⏱️  Estimated time on g5.2xlarge: {est_time_min:.1f} minutes")
         print(f"   (~{est_samples_per_sec} samples/second)")
+        print(f"\n💰 Estimated cost: ${est_time_min/60 * 0.80:.3f} (spot pricing)")
         
-        input("\n✅ Press Enter to start fast training...")
+        input("\n✅ Press Enter to start GPU training...")
         
         # Train!
         print("\n🚀 Training started!")
-        print(f"💨 Maximum speed mode enabled!\n")
+        print(f"⚡ GPU acceleration enabled!\n")
         
         start_time = time.time()
         
@@ -374,11 +384,12 @@ class M4ProTrainer:
             elapsed = time.time() - start_time
             
             print("\n" + "=" * 60)
-            print("   Training Complete!")
+            print("   ✅ Training Complete!")
             print("=" * 60)
-            print(f"   Time: {elapsed/60:.1f} minutes")
+            print(f"   Time: {elapsed/60:.1f} minutes ({elapsed:.0f} seconds)")
             print(f"   Speed: {total_samples / elapsed:.1f} samples/second")
             print(f"   Final loss: {train_result.metrics.get('train_loss', 'N/A'):.4f}")
+            print(f"   Cost: ${elapsed/3600 * 0.80:.3f} (spot)")
             
         except KeyboardInterrupt:
             print("\n⚠️  Training interrupted")
@@ -402,31 +413,35 @@ class M4ProTrainer:
         with open(Path(final_path) / "training_info.json", "w") as f:
             json.dump({
                 "model": self.config.model_name,
-                "device": "M4 Pro (MPS)",
+                "device": f"GPU - {torch.cuda.get_device_name(0)}",
+                "instance": "g5.2xlarge",
                 "time_minutes": elapsed/60,
                 "samples_per_second": total_samples / elapsed,
                 "final_loss": train_result.metrics.get('train_loss'),
                 "epochs": self.config.num_epochs,
                 "lora_rank": self.config.lora_r,
+                "batch_size": self.config.batch_size,
+                "cost_usd": elapsed/3600 * 0.80,
             }, f, indent=2)
         
         print(f"✅ Model saved!")
+        print(f"\n🎉 Training complete! Model ready for inference.")
         
         return train_result
 
 
 def main():
-    parser = argparse.ArgumentParser(description="M4 Pro Fast Training")
+    parser = argparse.ArgumentParser(description="AWS GPU Training (g5.2xlarge)")
     parser.add_argument("--model", type=str, default="tinyllama",
                        choices=list(MODELS.keys()),
-                       help="Model (tinyllama=fastest, qwen-0.5b=ultra fast)")
+                       help="Model to train")
     parser.add_argument("--epochs", type=int, default=3)
-    parser.add_argument("--batch-size", type=int, default=4,
-                       help="Batch size (4-8 for M4 Pro)")
-    parser.add_argument("--max-samples", type=int, default=None,
-                       help="Limit training samples")
+    parser.add_argument("--batch-size", type=int, default=16,
+                       help="Batch size (16-32 for g5.2xlarge)")
+    parser.add_argument("--lora-rank", type=int, default=16,
+                       help="LoRA rank (8-32)")
     parser.add_argument("--quick", action="store_true",
-                       help="Quick mode: 1 epoch, 2000 samples")
+                       help="Quick mode: 1 epoch")
     
     args = parser.parse_args()
     
@@ -434,30 +449,29 @@ def main():
     if args.quick:
         print("🚀 Quick mode enabled!")
         args.epochs = 1
-        # Prepare quick data
-        os.system("python prepare_data.py --max-samples 2000")
     
-    config = M4ProConfig(
+    config = GPUConfig(
         model_name=MODELS[args.model],
         num_epochs=args.epochs,
         batch_size=args.batch_size,
+        lora_r=args.lora_rank,
     )
     
     print("=" * 60)
-    print("   M4 Pro Fast Training (macOS Fixed)")
+    print("   AWS GPU Training (g5.2xlarge)")
     print("=" * 60)
-    print(f"\n💨 Maximum speed optimizations enabled")
+    print(f"\n⚡ GPU acceleration enabled")
     print(f"   Model: {args.model}")
     print(f"   Epochs: {args.epochs}")
     print(f"   Batch: {args.batch_size}")
-    print(f"\n⚠️  Note: Multiprocessing disabled for macOS stability")
+    print(f"   LoRA Rank: {args.lora_rank}")
     
-    trainer = M4ProTrainer(config)
+    trainer = GPUTrainer(config)
     trainer.setup_model()
     trainer.load_data()
     trainer.train()
     
-    print("\n✅ Done! Your model is blazing fast! 🔥")
+    print("\n✅ Done! Your model is trained on GPU! 🚀")
 
 
 if __name__ == "__main__":
