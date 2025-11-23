@@ -1,161 +1,155 @@
 """
-Model Training Script for ESports Strategy AI
-Fine-tunes an open-source LLM using LoRA for efficient training.
+M4 Pro Optimized Training Script
+Maximum speed optimizations for Apple Silicon M4
 
-Supported Models:
-- google/gemma-2b-it (default, efficient)
-- meta-llama/Llama-2-7b-chat-hf
-- mistralai/Mistral-7B-Instruct-v0.2
-- tiiuae/falcon-7b-instruct
-
-Usage:
-    python train.py                          # Train with defaults
-    python train.py --model gemma-2b         # Specify model
-    python train.py --epochs 5 --batch-size 4
-    python train.py --resume ./checkpoints/checkpoint-500
+Key optimizations:
+- Smaller, faster models
+- Optimized batch sizes for M4
+- Better MPS utilization
+- Memory-efficient processing
+- Faster tokenization
+- Fixed macOS multiprocessing issues
 """
 
 import os
 import sys
 import json
 import argparse
-import torch
+import time
 from pathlib import Path
 from datetime import datetime
-from dataclasses import dataclass, field
-from typing import Optional, List
+from dataclasses import dataclass
+from typing import Optional
 
+import torch
 from datasets import load_from_disk
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
-    BitsAndBytesConfig,
     TrainingArguments,
     Trainer,
     DataCollatorForSeq2Seq,
-    EarlyStoppingCallback
 )
-from peft import (
-    LoraConfig,
-    get_peft_model,
-    prepare_model_for_kbit_training,
-    TaskType,
-    PeftModel
-)
+from peft import LoraConfig, get_peft_model, TaskType
+from tqdm import tqdm
 
 
-# Available models
+# ============================================================
+# M4 Pro Optimized Models - FASTEST
+# ============================================================
 MODELS = {
-    "gemma-2b": "google/gemma-2b-it",
-    "gemma-7b": "google/gemma-7b-it",
-    "llama2-7b": "meta-llama/Llama-2-7b-chat-hf",
-    "llama3-8b": "meta-llama/Meta-Llama-3-8B-Instruct",
-    "mistral-7b": "mistralai/Mistral-7B-Instruct-v0.2",
-    "falcon-7b": "tiiuae/falcon-7b-instruct",
+    "tinyllama": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",  # 1.1B - FASTEST ⚡
+    "phi-2": "microsoft/phi-2",                          # 2.7B - Good speed/quality
+    "qwen-0.5b": "Qwen/Qwen2-0.5B-Instruct",           # 0.5B - ULTRA FAST
+    "stablelm-2": "stabilityai/stablelm-2-1_6b",       # 1.6B - Fast & good
 }
 
-# LoRA target modules per model
+# Optimized LoRA targets for speed
 LORA_TARGETS = {
-    "gemma": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-    "llama": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-    "mistral": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-    "falcon": ["query_key_value", "dense", "dense_h_to_4h", "dense_4h_to_h"],
+    "tinyllama": ["q_proj", "v_proj"],  # Minimal for speed
+    "phi": ["q_proj", "v_proj"],
+    "gemma": ["q_proj", "v_proj"],
+    "qwen": ["q_proj", "v_proj"],
+    "stablelm": ["q_proj", "v_proj"],
 }
 
 
 @dataclass
-class TrainingConfig:
-    """Training configuration."""
+class M4ProConfig:
+    """M4 Pro optimized training configuration."""
     # Model
-    model_name: str = "google/gemma-2b-it"
+    model_name: str = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
     
-    # Training
+    # M4 Pro optimized settings
     num_epochs: int = 3
-    batch_size: int = 2
-    gradient_accumulation: int = 4
-    learning_rate: float = 2e-4
-    warmup_ratio: float = 0.1
-    max_seq_length: int = 2048
+    batch_size: int = 4  # M4 Pro can handle more
+    gradient_accumulation: int = 2  # Smaller accumulation
+    learning_rate: float = 3e-4  # Slightly higher for faster convergence
+    max_seq_length: int = 384  # Shorter for speed
+    warmup_steps: int = 20  # Less warmup
     
-    # LoRA
-    lora_r: int = 16
-    lora_alpha: int = 32
+    # LoRA - minimal for speed
+    lora_r: int = 4  # Smaller rank = faster
+    lora_alpha: int = 8
     lora_dropout: float = 0.05
     
-    # Quantization
-    use_4bit: bool = True
+    # Speed optimizations
+    use_gradient_checkpointing: bool = False  # Faster without it
+    max_grad_norm: float = 1.0
+    dataloader_num_workers: int = 0  # Disable multiprocessing for macOS compatibility
+    
+    # Device
+    device: str = "mps"
     
     # Paths
-    data_dir: str = "./data/combined_training"
-    output_dir: str = "./models/esports-lora"
-    checkpoint_dir: str = "./checkpoints"
+    data_dir: str = "./data/training_data"
+    output_dir: str = "./models/esports-m4-fast"
     
     # Resume
     resume_from: Optional[str] = None
-
-
-class ESportsTrainer:
-    """Handles model training with LoRA."""
     
-    def __init__(self, config: TrainingConfig):
+    # Logging - less frequent for speed
+    logging_steps: int = 25
+    save_steps: int = 200
+    eval_steps: int = 200
+
+
+class M4ProTrainer:
+    """M4 Pro optimized trainer with maximum speed."""
+    
+    def __init__(self, config: M4ProConfig):
         self.config = config
         self.model = None
         self.tokenizer = None
         self.trainer = None
         
-    def setup(self):
-        """Setup model, tokenizer, and LoRA."""
+        # Verify MPS
+        if not torch.backends.mps.is_available():
+            print("⚠️  MPS not available! Using CPU (will be slow)")
+            self.config.device = "cpu"
+        else:
+            print("✅ M4 Pro detected - using MPS acceleration")
+            # Enable MPS optimizations
+            os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
+        
+    def setup_model(self):
+        """Load and prepare model - optimized for speed."""
         print("\n" + "=" * 60)
-        print("   Setting up training environment")
+        print("   M4 Pro Fast Model Setup")
         print("=" * 60)
         
-        # Check GPU
-        if torch.cuda.is_available():
-            print(f"✅ GPU detected: {torch.cuda.get_device_name(0)}")
-            print(f"   Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
-        else:
-            print("⚠️  No GPU detected! Training will be very slow.")
-            response = input("Continue anyway? (y/n): ")
-            if response.lower() != 'y':
-                sys.exit(0)
+        print(f"\n📥 Loading model: {self.config.model_name}")
         
         # Load tokenizer
-        print(f"\n📥 Loading tokenizer: {self.config.model_name}")
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.config.model_name,
-            trust_remote_code=True
+            trust_remote_code=True,
+            use_fast=True  # Use fast tokenizer
         )
         
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
             self.tokenizer.pad_token_id = self.tokenizer.eos_token_id
         
-        # Quantization config
-        print("📦 Setting up 4-bit quantization...")
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=self.config.use_4bit,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=torch.float16,
-            bnb_4bit_use_double_quant=True,
-        )
-        
-        # Load model
-        print(f"📥 Loading model: {self.config.model_name}")
-        print("   (This may take a few minutes...)")
+        # Load model - optimized for MPS
+        print(f"📦 Loading to MPS...")
         
         self.model = AutoModelForCausalLM.from_pretrained(
             self.config.model_name,
-            quantization_config=bnb_config,
-            device_map="auto",
             trust_remote_code=True,
-            torch_dtype=torch.float16,
+            torch_dtype=torch.float16,  # Use FP16 for speed
+            low_cpu_mem_usage=True,
         )
         
-        # Prepare for training
-        self.model = prepare_model_for_kbit_training(self.model)
+        # Move to MPS
+        self.model = self.model.to(self.config.device)
         
-        # Setup LoRA
-        print("🔧 Configuring LoRA adapters...")
+        print(f"✅ Model loaded!")
+        print(f"   Parameters: {self.model.num_parameters():,}")
+        print(f"   Size: {self.model.num_parameters() * 2 / 1e9:.2f} GB (FP16)")
+        
+        # Setup LoRA - minimal for speed
+        print("\n🔧 Setting up minimal LoRA (for speed)...")
         target_modules = self._get_target_modules()
         
         lora_config = LoraConfig(
@@ -170,61 +164,60 @@ class ESportsTrainer:
         self.model = get_peft_model(self.model, lora_config)
         
         # Print trainable parameters
-        trainable, total = self.model.get_nb_trainable_parameters()
-        print(f"✅ Model setup complete!")
-        print(f"   Trainable parameters: {trainable:,} ({100 * trainable / total:.2f}%)")
-        print(f"   Total parameters: {total:,}")
+        trainable_params = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
+        total_params = sum(p.numel() for p in self.model.parameters())
+        
+        print(f"✅ LoRA configured!")
+        print(f"   Trainable: {trainable_params:,} ({100*trainable_params/total_params:.2f}%)")
     
-    def _get_target_modules(self) -> List[str]:
-        """Get LoRA target modules based on model architecture."""
+    def _get_target_modules(self):
+        """Get minimal LoRA target modules for speed."""
         model_lower = self.config.model_name.lower()
         
         for key, targets in LORA_TARGETS.items():
             if key in model_lower:
                 return targets
         
-        # Default
-        return ["q_proj", "v_proj"]
+        return ["q_proj", "v_proj"]  # Minimal default
     
     def load_data(self):
-        """Load and prepare training data."""
-        print(f"\n📊 Loading dataset from {self.config.data_dir}")
+        """Load and prepare training data - optimized for macOS."""
+        print("\n📊 Loading dataset...")
         
         try:
             dataset = load_from_disk(self.config.data_dir)
-            print(f"   ✅ Loaded {len(dataset['train'])} training samples")
-            print(f"   ✅ Loaded {len(dataset['validation'])} validation samples")
+            print(f"   ✓ Train: {len(dataset['train']):,} samples")
+            print(f"   ✓ Validation: {len(dataset['validation']):,} samples")
         except Exception as e:
-            print(f"   ❌ Error loading dataset: {e}")
-            print("   Run prepare_data.py first!")
+            print(f"   ❌ Error: {e}")
+            print("   Run: python prepare_data.py --max-samples 5000")
             sys.exit(1)
         
-        # Format prompts
-        print("📝 Formatting prompts...")
+        # Format prompts - simplified for speed
+        print("📝 Formatting prompts (single process for macOS stability)...")
         
         def format_prompt(example):
+            # Simpler format for speed
             if example.get("input", "").strip():
-                text = f"""### Instruction:
-{example['instruction']}
-
-### Input:
-{example['input']}
-
-### Response:
-{example['output']}</s>"""
+                text = f"{example['instruction']}\n\n{example['input']}\n\n{example['output']}</s>"
             else:
-                text = f"""### Instruction:
-{example['instruction']}
-
-### Response:
-{example['output']}</s>"""
+                text = f"{example['instruction']}\n\n{example['output']}</s>"
             return {"text": text}
         
-        train_formatted = dataset['train'].map(format_prompt, remove_columns=dataset['train'].column_names)
-        val_formatted = dataset['validation'].map(format_prompt, remove_columns=dataset['validation'].column_names)
+        # Single process to avoid macOS multiprocessing issues
+        train_formatted = dataset['train'].map(
+            format_prompt, 
+            remove_columns=dataset['train'].column_names,
+            desc="Formatting train"
+        )
+        val_formatted = dataset['validation'].map(
+            format_prompt, 
+            remove_columns=dataset['validation'].column_names,
+            desc="Formatting validation"
+        )
         
-        # Tokenize
-        print("🔤 Tokenizing...")
+        # Tokenize - single process for stability
+        print("🔤 Tokenizing (single process for macOS stability)...")
         
         def tokenize(examples):
             tokenized = self.tokenizer(
@@ -232,27 +225,42 @@ class ESportsTrainer:
                 truncation=True,
                 max_length=self.config.max_seq_length,
                 padding="max_length",
+                return_tensors=None,  # Don't convert to tensors yet
             )
             tokenized["labels"] = tokenized["input_ids"].copy()
             return tokenized
         
-        self.train_dataset = train_formatted.map(tokenize, batched=True, remove_columns=["text"])
-        self.val_dataset = val_formatted.map(tokenize, batched=True, remove_columns=["text"])
+        # Use batched processing but single process
+        self.train_dataset = train_formatted.map(
+            tokenize, 
+            batched=True,
+            batch_size=1000,  # Large batches for speed
+            remove_columns=["text"],
+            desc="Tokenizing train"
+        )
         
-        print(f"   ✅ Training samples: {len(self.train_dataset)}")
-        print(f"   ✅ Validation samples: {len(self.val_dataset)}")
+        self.val_dataset = val_formatted.map(
+            tokenize, 
+            batched=True,
+            batch_size=1000,
+            remove_columns=["text"],
+            desc="Tokenizing validation"
+        )
+        
+        print(f"✅ Data ready!")
+        print(f"   Train: {len(self.train_dataset):,} samples")
+        print(f"   Validation: {len(self.val_dataset):,} samples")
     
     def train(self):
-        """Run training."""
+        """Run training - maximum speed optimization."""
         print("\n" + "=" * 60)
-        print("   Starting Training")
+        print("   M4 Pro Fast Training")
         print("=" * 60)
         
-        # Create output directory
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_dir = f"{self.config.output_dir}_{timestamp}"
         
-        # Training arguments
+        # M4 Pro optimized training arguments
         training_args = TrainingArguments(
             output_dir=output_dir,
             num_train_epochs=self.config.num_epochs,
@@ -260,173 +268,196 @@ class ESportsTrainer:
             per_device_eval_batch_size=self.config.batch_size,
             gradient_accumulation_steps=self.config.gradient_accumulation,
             learning_rate=self.config.learning_rate,
-            warmup_ratio=self.config.warmup_ratio,
-            logging_steps=10,
-            save_strategy="steps",
-            save_steps=100,
+            warmup_steps=self.config.warmup_steps,
+            
+            # Logging - less frequent
+            logging_steps=self.config.logging_steps,
+            logging_first_step=True,
+            
+            # Evaluation - less frequent
             eval_strategy="steps",
-            eval_steps=100,
-            load_best_model_at_end=True,
-            metric_for_best_model="eval_loss",
-            greater_is_better=False,
-            fp16=True,
-            report_to="none",  # Set to "wandb" if using Weights & Biases
-            optim="paged_adamw_8bit",
-            gradient_checkpointing=True,
-            max_grad_norm=0.3,
-            group_by_length=True,
-            save_total_limit=3,
+            eval_steps=self.config.eval_steps,
+            
+            # Saving - less frequent
+            save_strategy="steps",
+            save_steps=self.config.save_steps,
+            save_total_limit=1,  # Keep only 1 checkpoint
+            
+            # Speed optimizations - disabled multiprocessing for macOS
+            dataloader_num_workers=self.config.dataloader_num_workers,
+            dataloader_pin_memory=False,  # Disabled for macOS stability
+            
+            # Gradient
+            max_grad_norm=self.config.max_grad_norm,
+            
+            # MPS specific
+            use_cpu=False,
+            no_cuda=True,
+            fp16=True,  # FP16 for speed on MPS
+            
+            # Disable slow features
+            report_to="none",
+            load_best_model_at_end=False,
+            metric_for_best_model=None,
+            greater_is_better=None,
+            
+            # Memory optimization
+            gradient_checkpointing=self.config.use_gradient_checkpointing,
+            optim="adamw_torch",  # Faster than default
+            
+            # Disable unnecessary features
+            push_to_hub=False,
+            hub_strategy="end",
         )
         
-        # Data collator
+        # Fast data collator
         data_collator = DataCollatorForSeq2Seq(
             tokenizer=self.tokenizer,
             model=self.model,
             padding=True,
+            return_tensors="pt"
         )
         
-        # Trainer
+        # Create trainer
         self.trainer = Trainer(
             model=self.model,
             args=training_args,
             train_dataset=self.train_dataset,
             eval_dataset=self.val_dataset,
             data_collator=data_collator,
-            callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
         )
         
-        # Resume from checkpoint if specified
-        resume_checkpoint = None
-        if self.config.resume_from:
-            resume_checkpoint = self.config.resume_from
-            print(f"📂 Resuming from checkpoint: {resume_checkpoint}")
+        # Print info
+        total_batch = self.config.batch_size * self.config.gradient_accumulation
+        total_steps = len(self.train_dataset) * self.config.num_epochs // total_batch
         
-        # Train!
-        print("\n🚀 Training started!")
+        print(f"\n📊 M4 Pro Fast Configuration:")
+        print(f"   Model: {self.config.model_name.split('/')[-1]}")
+        print(f"   Device: {self.config.device.upper()}")
         print(f"   Epochs: {self.config.num_epochs}")
         print(f"   Batch size: {self.config.batch_size}")
         print(f"   Gradient accumulation: {self.config.gradient_accumulation}")
-        print(f"   Effective batch size: {self.config.batch_size * self.config.gradient_accumulation}")
-        print(f"   Learning rate: {self.config.learning_rate}")
-        print()
+        print(f"   Effective batch: {total_batch}")
+        print(f"   Sequence length: {self.config.max_seq_length}")
+        print(f"   Total steps: {total_steps}")
+        print(f"   LoRA rank: {self.config.lora_r} (minimal for speed)")
         
-        train_result = self.trainer.train(resume_from_checkpoint=resume_checkpoint)
+        # Estimate time
+        samples_per_sec = {
+            "tinyllama": 12,   # ~12 samples/sec on M4 Pro
+            "qwen-0.5b": 20,   # ~20 samples/sec
+            "stablelm": 10,    # ~10 samples/sec
+            "phi": 6,          # ~6 samples/sec
+        }
         
-        # Print results
-        print("\n" + "=" * 60)
-        print("   Training Complete!")
-        print("=" * 60)
-        print(f"   Training loss: {train_result.metrics['train_loss']:.4f}")
+        model_key = next((k for k in samples_per_sec.keys() if k in self.config.model_name.lower()), "tinyllama")
+        est_samples_per_sec = samples_per_sec[model_key]
+        total_samples = len(self.train_dataset) * self.config.num_epochs
+        est_time_min = total_samples / est_samples_per_sec / 60
+        
+        print(f"\n⏱️  Estimated time on M4 Pro: {est_time_min:.0f} minutes")
+        print(f"   (~{est_samples_per_sec} samples/second)")
+        
+        input("\n✅ Press Enter to start fast training...")
+        
+        # Train!
+        print("\n🚀 Training started!")
+        print(f"💨 Maximum speed mode enabled!\n")
+        
+        start_time = time.time()
+        
+        try:
+            train_result = self.trainer.train(
+                resume_from_checkpoint=self.config.resume_from
+            )
+            
+            elapsed = time.time() - start_time
+            
+            print("\n" + "=" * 60)
+            print("   Training Complete!")
+            print("=" * 60)
+            print(f"   Time: {elapsed/60:.1f} minutes")
+            print(f"   Speed: {total_samples / elapsed:.1f} samples/second")
+            print(f"   Final loss: {train_result.metrics.get('train_loss', 'N/A'):.4f}")
+            
+        except KeyboardInterrupt:
+            print("\n⚠️  Training interrupted")
+            elapsed = time.time() - start_time
+            print(f"   Trained for {elapsed/60:.1f} minutes")
+            
+        except Exception as e:
+            print(f"\n❌ Error: {e}")
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)
         
         # Save final model
         final_path = f"{self.config.output_dir}_final"
-        print(f"\n💾 Saving model to {final_path}")
+        print(f"\n💾 Saving to {final_path}...")
+        
         self.model.save_pretrained(final_path)
         self.tokenizer.save_pretrained(final_path)
         
-        # Save config
-        config_path = Path(final_path) / "training_config.json"
-        with open(config_path, "w") as f:
-            json.dump(vars(self.config), f, indent=2)
+        # Save stats
+        with open(Path(final_path) / "training_info.json", "w") as f:
+            json.dump({
+                "model": self.config.model_name,
+                "device": "M4 Pro (MPS)",
+                "time_minutes": elapsed/60,
+                "samples_per_second": total_samples / elapsed,
+                "final_loss": train_result.metrics.get('train_loss'),
+                "epochs": self.config.num_epochs,
+                "lora_rank": self.config.lora_r,
+            }, f, indent=2)
         
-        print(f"✅ Model saved successfully!")
-        print(f"\nTo use your trained model:")
-        print(f"   1. Set LOCAL_MODEL_PATH={final_path} in .env")
-        print(f"   2. Set LLM_BACKEND=local in .env")
-        print(f"   3. Restart the server")
+        print(f"✅ Model saved!")
         
         return train_result
-    
-    def test_generation(self, prompt: str = None):
-        """Test the trained model with a sample prompt."""
-        print("\n🧪 Testing model generation...")
-        
-        if prompt is None:
-            prompt = "Summarize a League of Legends match where the blue team won through superior teamfighting."
-        
-        formatted = f"""### Instruction:
-{prompt}
-
-### Response:
-"""
-        
-        inputs = self.tokenizer(formatted, return_tensors="pt").to(self.model.device)
-        
-        with torch.no_grad():
-            outputs = self.model.generate(
-                **inputs,
-                max_new_tokens=256,
-                temperature=0.7,
-                do_sample=True,
-                top_p=0.95,
-                repetition_penalty=1.1,
-                pad_token_id=self.tokenizer.pad_token_id,
-            )
-        
-        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-        
-        if "### Response:" in response:
-            response = response.split("### Response:")[-1].strip()
-        
-        print(f"\nPrompt: {prompt}")
-        print(f"\nGenerated Response:\n{response}")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Train ESports Strategy AI model")
-    parser.add_argument("--model", type=str, default="gemma-2b", 
+    parser = argparse.ArgumentParser(description="M4 Pro Fast Training")
+    parser.add_argument("--model", type=str, default="tinyllama",
                        choices=list(MODELS.keys()),
-                       help="Model to fine-tune")
-    parser.add_argument("--epochs", type=int, default=3, help="Number of training epochs")
-    parser.add_argument("--batch-size", type=int, default=2, help="Training batch size")
-    parser.add_argument("--lr", type=float, default=2e-4, help="Learning rate")
-    parser.add_argument("--lora-r", type=int, default=16, help="LoRA rank")
-    parser.add_argument("--data-dir", type=str, default="./data/combined_training", help="Training data path")
-    parser.add_argument("--output-dir", type=str, default="./models/esports-lora", help="Output directory")
-    parser.add_argument("--resume", type=str, default=None, help="Resume from checkpoint")
-    parser.add_argument("--test-only", action="store_true", help="Only test existing model")
+                       help="Model (tinyllama=fastest, qwen-0.5b=ultra fast)")
+    parser.add_argument("--epochs", type=int, default=3)
+    parser.add_argument("--batch-size", type=int, default=4,
+                       help="Batch size (4-8 for M4 Pro)")
+    parser.add_argument("--max-samples", type=int, default=None,
+                       help="Limit training samples")
+    parser.add_argument("--quick", action="store_true",
+                       help="Quick mode: 1 epoch, 2000 samples")
     
     args = parser.parse_args()
     
-    # Create config
-    config = TrainingConfig(
+    # Quick mode
+    if args.quick:
+        print("🚀 Quick mode enabled!")
+        args.epochs = 1
+        # Prepare quick data
+        os.system("python prepare_data.py --max-samples 2000")
+    
+    config = M4ProConfig(
         model_name=MODELS[args.model],
         num_epochs=args.epochs,
         batch_size=args.batch_size,
-        learning_rate=args.lr,
-        lora_r=args.lora_r,
-        data_dir=args.data_dir,
-        output_dir=args.output_dir,
-        resume_from=args.resume,
     )
     
     print("=" * 60)
-    print("   ESports Strategy AI - Model Training")
+    print("   M4 Pro Fast Training (macOS Fixed)")
     print("=" * 60)
-    print(f"\nConfiguration:")
-    print(f"   Model: {config.model_name}")
-    print(f"   Epochs: {config.num_epochs}")
-    print(f"   Batch size: {config.batch_size}")
-    print(f"   Learning rate: {config.learning_rate}")
-    print(f"   LoRA rank: {config.lora_r}")
+    print(f"\n💨 Maximum speed optimizations enabled")
+    print(f"   Model: {args.model}")
+    print(f"   Epochs: {args.epochs}")
+    print(f"   Batch: {args.batch_size}")
+    print(f"\n⚠️  Note: Multiprocessing disabled for macOS stability")
     
-    # Initialize trainer
-    trainer = ESportsTrainer(config)
+    trainer = M4ProTrainer(config)
+    trainer.setup_model()
+    trainer.load_data()
+    trainer.train()
     
-    # Setup
-    trainer.setup()
-    
-    if not args.test_only:
-        # Load data
-        trainer.load_data()
-        
-        # Train
-        trainer.train()
-    
-    # Test
-    trainer.test_generation()
-    
-    print("\n✅ Training complete!")
+    print("\n✅ Done! Your model is blazing fast! 🔥")
 
 
 if __name__ == "__main__":
