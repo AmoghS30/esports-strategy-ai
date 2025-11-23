@@ -194,7 +194,7 @@ class GPUTrainer:
         return ["q_proj", "v_proj", "k_proj", "o_proj"]
     
     def load_data(self):
-        """Load and prepare training data - GPU optimized."""
+        """Load and prepare training data - optimized for GPU (no multiprocessing to avoid CUDA fork issues)."""
         print("\n📊 Loading dataset...")
         
         try:
@@ -216,21 +216,20 @@ class GPUTrainer:
                 text = f"{example['instruction']}\n\n{example['output']}</s>"
             return {"text": text}
         
+        # Don't use multiprocessing with CUDA to avoid fork issues
         train_formatted = dataset['train'].map(
             format_prompt, 
             remove_columns=dataset['train'].column_names,
-            desc="Formatting train",
-            num_proc=4  # Parallel processing on Linux
+            desc="Formatting train"
         )
         val_formatted = dataset['validation'].map(
             format_prompt, 
             remove_columns=dataset['validation'].column_names,
-            desc="Formatting validation",
-            num_proc=4
+            desc="Formatting validation"
         )
         
         # Tokenize
-        print("🔤 Tokenizing (parallel processing)...")
+        print("🔤 Tokenizing (batched processing)...")
         
         def tokenize(examples):
             tokenized = self.tokenizer(
@@ -243,12 +242,12 @@ class GPUTrainer:
             tokenized["labels"] = tokenized["input_ids"].copy()
             return tokenized
         
+        # Use batched processing but single process to avoid CUDA fork issues
         self.train_dataset = train_formatted.map(
             tokenize, 
             batched=True,
             batch_size=1000,
             remove_columns=["text"],
-            num_proc=4,
             desc="Tokenizing train"
         )
         
@@ -257,7 +256,6 @@ class GPUTrainer:
             batched=True,
             batch_size=1000,
             remove_columns=["text"],
-            num_proc=4,
             desc="Tokenizing validation"
         )
         
