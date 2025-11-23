@@ -1,0 +1,18 @@
+{
+  "train_sample": {
+    "instruction": "Summarize the following dialogue concisely, capturing the main points and outcome of the conversation.",
+    "input": "#Person1#: Hi, Mr. Smith. I'm Doctor Hawkins. Why are you here today?\n#Person2#: I found it would be a good idea to get a check-up.\n#Person1#: Yes, well, you haven't had one for 5 years. You should have one every year.\n#Person2#: I know. I figure as long as there is nothing wrong, why go see the doctor?\n#Person1#: Well, the best way to avoid serious illnesses is to find out about them early. So try to come at least once a year for your own good.\n#Person2#: Ok.\n#Person1#: Let me see here. Your eyes and ears look fine. Take a deep breath, please. Do you smoke, Mr. Smith?\n#Person2#: Yes.\n#Person1#: Smoking is the leading cause of lung cancer and heart disease, you know. You really should quit.\n#Person2#: I've tried hundreds of times, but I just can't seem to kick the habit.\n#Person1#: Well, we have classes and some medications that might help. I'll give you more information before you leave.\n#Person2#: Ok, thanks doctor.",
+    "output": "Mr. Smith's getting a check-up, and Doctor Hawkins advises him to have one every year. Hawkins'll give some information about their classes and medications to help Mr. Smith quit smoking."
+  },
+  "val_sample": {
+    "instruction": "Summarize the following dialogue concisely, capturing the main points and outcome of the conversation.",
+    "input": "#Person1#: Hello, how are you doing today?\n#Person2#: I ' Ve been having trouble breathing lately.\n#Person1#: Have you had any type of cold lately?\n#Person2#: No, I haven ' t had a cold. I just have a heavy feeling in my chest when I try to breathe.\n#Person1#: Do you have any allergies that you know of?\n#Person2#: No, I don ' t have any allergies that I know of.\n#Person1#: Does this happen all the time or mostly when you are active?\n#Person2#: It happens a lot when I work out.\n#Person1#: I am going to send you to a pulmonary specialist who can run tests on you for asthma.\n#Person2#: Thank you for your help, doctor.",
+    "output": "#Person2# has trouble breathing. The doctor asks #Person2# about it and will send #Person2# to a pulmonary specialist."
+  },
+  "stats": {
+    "train_size": 10030,
+    "val_size": 1003,
+    "test_size": 1000,
+    "includes_esports": true
+  }
+}

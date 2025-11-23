@@ -1,0 +1,12 @@
+{
+  "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+  "device": "GPU - NVIDIA A10G",
+  "instance": "g5.2xlarge",
+  "time_minutes": 43.15539596478144,
+  "samples_per_second": 11.620794776376693,
+  "final_loss": 0.9047357362799837,
+  "epochs": 3,
+  "lora_rank": 16,
+  "batch_size": 16,
+  "cost_usd": 0.5754052795304192
+}

@@ -1,0 +1,152 @@
+{
+  "info": {
+    "name": "ESports Strategy Summarizer API",
+    "description": "Complete API collection for testing the ESports Strategy Summarizer backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Check API health and model status"
+      }
+    },
+    {
+      "name": "Get Configuration",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/config",
+          "host": ["{{base_url}}"],
+          "path": ["api", "config"]
+        },
+        "description": "Get available configuration options"
+      }
+    },
+    {
+      "name": "Summarize Match - Analytical",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_data\": {\n    \"team_a\": \"Team Liquid\",\n    \"team_b\": \"Evil Geniuses\",\n    \"winner\": \"Team Liquid\",\n    \"duration\": \"42:15\",\n    \"team_a_composition\": \"Invoker, Anti-Mage, Lion, Earthshaker, Crystal Maiden\",\n    \"team_b_composition\": \"Phantom Assassin, Queen of Pain, Rubick, Tidehunter, Ancient Apparition\",\n    \"events\": [\n      \"5:30 - Team Liquid secures first blood mid lane\",\n      \"12:00 - Evil Geniuses takes first tower bot lane\",\n      \"18:45 - Major team fight at Roshan pit, Team Liquid wins 4-1\",\n      \"25:30 - Evil Geniuses secures Roshan\",\n      \"32:00 - Team Liquid wins decisive team fight, wipes Evil Geniuses\",\n      \"35:15 - Team Liquid takes mid barracks\",\n      \"42:15 - Team Liquid destroys ancient\"\n    ],\n    \"commentary\": \"An intense match between two top-tier teams. Team Liquid's Invoker controlled the mid game with exceptional spell combos.\",\n    \"statistics\": {\n      \"Team Liquid Kills\": \"45\",\n      \"Evil Geniuses Kills\": \"32\",\n      \"Team Liquid Gold\": \"65.2k\",\n      \"Evil Geniuses Gold\": \"58.1k\"\n    }\n  },\n  \"style\": \"analytical\",\n  \"focus\": \"team_fights\",\n  \"length\": \"medium\",\n  \"temperature\": 0.7\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/summarize",
+          "host": ["{{base_url}}"],
+          "path": ["api", "summarize"]
+        },
+        "description": "Generate analytical match summary focused on team fights"
+      }
+    },
+    {
+      "name": "Summarize Match - Narrative",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_data\": {\n    \"team_a\": \"OG\",\n    \"team_b\": \"Team Secret\",\n    \"winner\": \"OG\",\n    \"duration\": \"51:34\",\n    \"events\": [\n      \"10:00 - Team Secret dominates early game, 8-1 kill lead\",\n      \"22:00 - OG stages comeback with 5-0 team wipe\",\n      \"35:00 - OG secures mega creeps\",\n      \"51:34 - OG wins after epic comeback\"\n    ]\n  },\n  \"style\": \"narrative\",\n  \"focus\": \"macro\",\n  \"length\": \"long\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/summarize",
+          "host": ["{{base_url}}"],
+          "path": ["api", "summarize"]
+        },
+        "description": "Generate narrative-style summary focused on macro strategy"
+      }
+    },
+    {
+      "name": "Get Recommendations",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_data\": {\n    \"team_a\": \"Fnatic\",\n    \"team_b\": \"PSG.LGD\",\n    \"winner\": \"PSG.LGD\",\n    \"duration\": \"38:42\",\n    \"team_a_composition\": \"Spectre, Shadow Fiend, Disruptor, Bounty Hunter, Oracle\",\n    \"team_b_composition\": \"Faceless Void, Dragon Knight, Magnus, Grimstroke, Vengeful Spirit\",\n    \"events\": [\n      \"Early game: Spectre struggled to farm safely\",\n      \"12:00 - Multiple failed ganks by Bounty Hunter\",\n      \"20:00 - PSG.LGD secured all objectives\",\n      \"30:00 - Spectre still underfarmed, game lost\"\n    ],\n    \"statistics\": {\n      \"Fnatic Kills\": \"18\",\n      \"PSG.LGD Kills\": \"35\",\n      \"Fnatic Gold\": \"48.2k\",\n      \"PSG.LGD Gold\": \"67.8k\"\n    }\n  },\n  \"team\": \"team_a\",\n  \"recommendation_depth\": 4,\n  \"temperature\": 0.7\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/recommendations",
+          "host": ["{{base_url}}"],
+          "path": ["api", "recommendations"]
+        },
+        "description": "Get tactical recommendations for team improvement"
+      }
+    },
+    {
+      "name": "Identify Turning Points",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_data\": {\n    \"team_a\": \"T1\",\n    \"team_b\": \"Gen.G\",\n    \"winner\": \"T1\",\n    \"events\": [\n      \"15:00 - Gen.G takes Baron, gains 8k gold lead\",\n      \"23:00 - T1 steals Elder Dragon with perfect smite\",\n      \"28:00 - T1 wins decisive team fight at mid lane\",\n      \"32:00 - T1 secures Baron and pushes to win\"\n    ],\n    \"commentary\": \"What a turnaround! T1 was on the brink of defeat but that Elder Dragon steal completely changed the game.\"\n  },\n  \"temperature\": 0.7\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/turning-points",
+          "host": ["{{base_url}}"],
+          "path": ["api", "turning-points"]
+        },
+        "description": "Identify key turning points in the match"
+      }
+    },
+    {
+      "name": "Complete Match Analysis",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"match_data\": {\n    \"team_a\": \"Cloud9\",\n    \"team_b\": \"TSM\",\n    \"winner\": \"Cloud9\",\n    \"duration\": \"35:17\",\n    \"team_a_composition\": \"Gangplank, Graves, Orianna, Jinx, Thresh\",\n    \"team_b_composition\": \"Ornn, Lee Sin, Syndra, Kai'Sa, Nautilus\",\n    \"events\": [\n      \"8:00 - Cloud9 secures first blood and first dragon\",\n      \"14:00 - TSM takes first tower\",\n      \"21:00 - Cloud9 wins Baron fight 4-1\",\n      \"28:00 - Cloud9 takes down inhibitor\",\n      \"35:17 - Cloud9 wins\"\n    ],\n    \"statistics\": {\n      \"Cloud9 Kills\": \"22\",\n      \"TSM Kills\": \"14\",\n      \"Cloud9 Gold\": \"65.3k\",\n      \"TSM Gold\": \"58.9k\",\n      \"Cloud9 Dragons\": \"3\",\n      \"TSM Dragons\": \"1\"\n    }\n  },\n  \"style\": \"tactical\",\n  \"focus\": \"objectives\",\n  \"team\": \"team_a\",\n  \"recommendation_depth\": 3\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/analyze",
+          "host": ["{{base_url}}"],
+          "path": ["api", "analyze"]
+        },
+        "description": "Get complete match analysis with summary, recommendations, and turning points"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ]
+}
