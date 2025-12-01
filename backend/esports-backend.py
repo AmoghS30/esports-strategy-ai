@@ -38,7 +38,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*", "methods": ["GET", "POST", "OPTIONS"], "allow_headers": ["Content-Type"]}})
 
 # ============================================================
 # Configuration
@@ -417,28 +417,6 @@ For each aspect, identify which team performed better and why.
 Comparative Analysis:"""
         
         return prompt
-    
-    @staticmethod
-    def build_prediction_prompt(match_data: Dict, future_matchup: Dict) -> str:
-        """Build prompt for predicting future matchups based on past performance"""
-        context = EnhancedPromptBuilder.build_match_context(match_data)
-        
-        prompt = f"""{context}
-
-Based on this match performance, predict the outcome if these teams face each other again with the following conditions:
-
-Future Matchup:
-{json.dumps(future_matchup, indent=2)}
-
-Provide:
-1. Win probability for each team (with reasoning)
-2. Key factors that will determine the outcome
-3. Specific strategies each team should employ
-4. Potential surprise factors or wildcards
-
-Prediction:"""
-        
-        return prompt
 
 
 # ============================================================
@@ -611,7 +589,93 @@ def health():
     
     return jsonify(health_status)
 
-@app.route('/api/summarize', methods=['POST'])
+@app.route('/api/analyze', methods=['POST', 'OPTIONS'])
+def analyze_complete():
+    """
+    Complete analysis endpoint - combines summary, turning points, and recommendations
+    
+    Request body:
+    {
+        "match_data": {...},
+        "style": "analytical",
+        "focus": "team_fights",
+        "team": "team_a",
+        "recommendation_depth": 3
+    }
+    """
+    if request.method == 'OPTIONS':
+        return '', 200
+        
+    try:
+        if not model_manager.loaded:
+            return jsonify({"error": "Model not loaded"}), 503
+        
+        data = request.get_json()
+        
+        if not data or 'match_data' not in data:
+            return jsonify({"error": "Missing match_data in request"}), 400
+        
+        match_data = data['match_data']
+        style = data.get('style', 'analytical')
+        focus = data.get('focus', 'team_fights')
+        team = data.get('team', 'team_a')
+        recommendation_depth = data.get('recommendation_depth', 3)
+        temperature = data.get('temperature', config.TEMPERATURE)
+        
+        logger.info(f"Complete analysis requested for {match_data.get('team_a')} vs {match_data.get('team_b')}")
+        
+        # Generate summary
+        summary_prompt = EnhancedPromptBuilder.build_summary_prompt(
+            match_data=match_data,
+            style=style,
+            focus=focus,
+            length='medium'
+        )
+        summary_result = model_manager.generate(prompt=summary_prompt, temperature=temperature)
+        
+        # Generate turning points
+        turning_points_prompt = EnhancedPromptBuilder.build_turning_points_prompt(match_data, num_points=3)
+        turning_points_result = model_manager.generate(prompt=turning_points_prompt, temperature=temperature)
+        
+        # Generate recommendations
+        recommendations_prompt = EnhancedPromptBuilder.build_tactical_recommendations_prompt(
+            match_data=match_data,
+            team=team,
+            num_recommendations=recommendation_depth
+        )
+        recommendations_result = model_manager.generate(prompt=recommendations_prompt, temperature=temperature)
+        
+        return jsonify({
+            "success": True,
+            "analysis": {
+                "summary": summary_result['text'],
+                "turning_points": turning_points_result['text'],
+                "recommendations": recommendations_result['text']
+            },
+            "metadata": {
+                "match": {
+                    "team_a": match_data.get('team_a'),
+                    "team_b": match_data.get('team_b'),
+                    "winner": match_data.get('winner'),
+                    "duration": match_data.get('duration')
+                },
+                "style": style,
+                "focus": focus,
+                "team": team,
+                "timestamp": datetime.now().isoformat()
+            },
+            "stats": {
+                "summary": summary_result['stats'],
+                "turning_points": turning_points_result['stats'],
+                "recommendations": recommendations_result['stats']
+            }
+        })
+        
+    except Exception as e:
+        logger.error(f"Error in analyze_complete: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/summarize', methods=['POST', 'OPTIONS'])
 def summarize_match():
     """
     Generate match summary with customizable style and focus
@@ -627,6 +691,9 @@ def summarize_match():
         "include_evaluation": false
     }
     """
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     try:
         if not model_manager.loaded:
             return jsonify({"error": "Model not loaded"}), 503
@@ -688,7 +755,7 @@ def summarize_match():
         logger.error(f"Error in summarize_match: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/turning-points', methods=['POST'])
+@app.route('/api/turning-points', methods=['POST', 'OPTIONS'])
 def identify_turning_points():
     """
     Identify key turning points in a match
@@ -700,6 +767,9 @@ def identify_turning_points():
         "temperature": 0.7
     }
     """
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     try:
         if not model_manager.loaded:
             return jsonify({"error": "Model not loaded"}), 503
@@ -741,7 +811,7 @@ def identify_turning_points():
         logger.error(f"Error in identify_turning_points: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/recommendations', methods=['POST'])
+@app.route('/api/recommendations', methods=['POST', 'OPTIONS'])
 def get_recommendations():
     """
     Generate tactical recommendations for a team
@@ -756,6 +826,9 @@ def get_recommendations():
         "evaluate_quality": false
     }
     """
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     try:
         if not model_manager.loaded:
             return jsonify({"error": "Model not loaded"}), 503
@@ -768,6 +841,7 @@ def get_recommendations():
         match_data = data['match_data']
         team = data.get('team', 'team_a')
         num_recommendations = data.get('num_recommendations', 3)
+        recommendation_depth = data.get('recommendation_depth', num_recommendations)
         focus_areas = data.get('focus_areas', None)
         temperature = data.get('temperature', config.TEMPERATURE)
         evaluate_quality = data.get('evaluate_quality', False)
@@ -776,11 +850,11 @@ def get_recommendations():
         prompt = EnhancedPromptBuilder.build_tactical_recommendations_prompt(
             match_data=match_data,
             team=team,
-            num_recommendations=num_recommendations,
+            num_recommendations=recommendation_depth,
             focus_areas=focus_areas
         )
         
-        logger.info(f"Generating {num_recommendations} recommendations for {team}")
+        logger.info(f"Generating {recommendation_depth} recommendations for {team}")
         
         # Generate recommendations
         result = model_manager.generate(
@@ -793,7 +867,7 @@ def get_recommendations():
             "recommendations": result['text'],
             "metadata": {
                 "team": team,
-                "num_recommendations": num_recommendations,
+                "num_recommendations": recommendation_depth,
                 "focus_areas": focus_areas,
                 "timestamp": datetime.now().isoformat()
             },
@@ -811,7 +885,7 @@ def get_recommendations():
         logger.error(f"Error in get_recommendations: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/compare', methods=['POST'])
+@app.route('/api/compare', methods=['POST', 'OPTIONS'])
 def compare_teams():
     """
     Generate comparative analysis of team performances
@@ -822,6 +896,9 @@ def compare_teams():
         "temperature": 0.7
     }
     """
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     try:
         if not model_manager.loaded:
             return jsonify({"error": "Model not loaded"}), 503
@@ -859,7 +936,7 @@ def compare_teams():
         logger.error(f"Error in compare_teams: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/evaluate', methods=['POST'])
+@app.route('/api/evaluate', methods=['POST', 'OPTIONS'])
 def evaluate_summary():
     """
     Evaluate a generated summary
@@ -872,6 +949,9 @@ def evaluate_summary():
         "evaluation_type": "rouge|coverage|quality|human_template"
     }
     """
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     try:
         data = request.get_json()
         
@@ -922,7 +1002,7 @@ def evaluate_summary():
         logger.error(f"Error in evaluate_summary: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/batch', methods=['POST'])
+@app.route('/api/batch', methods=['POST', 'OPTIONS'])
 def batch_process():
     """
     Process multiple matches in batch
@@ -937,6 +1017,9 @@ def batch_process():
         "temperature": 0.7
     }
     """
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     try:
         if not model_manager.loaded:
             return jsonify({"error": "Model not loaded"}), 503
@@ -1005,9 +1088,12 @@ def batch_process():
         logger.error(f"Error in batch_process: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/config', methods=['GET'])
+@app.route('/api/config', methods=['GET', 'OPTIONS'])
 def get_config():
     """Get available configuration options"""
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     return jsonify({
         "summary_styles": {
             k: v["description"] for k, v in config.SUMMARY_STYLES.items()
@@ -1023,9 +1109,12 @@ def get_config():
         "rouge_available": ROUGE_AVAILABLE
     })
 
-@app.route('/api/stats', methods=['GET'])
+@app.route('/api/stats', methods=['GET', 'OPTIONS'])
 def get_stats():
     """Get generation statistics"""
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     return jsonify({
         "success": True,
         "stats": model_manager.get_stats_summary(),
@@ -1060,15 +1149,16 @@ def main():
     print(f"   ROUGE Available: {ROUGE_AVAILABLE}")
     print(f"   Port: 8080")
     print("\n   API Endpoints:")
-    print("   - POST /api/summarize       - Generate match summary")
-    print("   - POST /api/turning-points  - Identify turning points")
-    print("   - POST /api/recommendations - Get tactical recommendations")
-    print("   - POST /api/compare         - Compare team performances")
-    print("   - POST /api/evaluate        - Evaluate generated text")
-    print("   - POST /api/batch           - Batch process matches")
-    print("   - GET  /api/config          - Get configuration options")
-    print("   - GET  /api/stats           - Get generation statistics")
-    print("   - GET  /health              - Health check")
+    print("   - POST /api/analyze          - Complete analysis")
+    print("   - POST /api/summarize        - Generate match summary")
+    print("   - POST /api/turning-points   - Identify turning points")
+    print("   - POST /api/recommendations  - Get tactical recommendations")
+    print("   - POST /api/compare          - Compare team performances")
+    print("   - POST /api/evaluate         - Evaluate generated text")
+    print("   - POST /api/batch            - Batch process matches")
+    print("   - GET  /api/config           - Get configuration options")
+    print("   - GET  /api/stats            - Get generation statistics")
+    print("   - GET  /health               - Health check")
     print("\n" + "=" * 60)
     print("   ✅ Ready to serve requests!")
     print("=" * 60 + "\n")

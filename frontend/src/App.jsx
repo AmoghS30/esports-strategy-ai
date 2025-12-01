@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Zap, Target, TrendingUp, AlertCircle, Play, ChevronRight, Sparkles, Shield, Trophy, Activity } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://35.154.3.181:8080';
 
 export default function EsportsAnalyzer() {
   const [matchData, setMatchData] = useState({
@@ -90,12 +90,16 @@ export default function EsportsAnalyzer() {
 
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`API Error ${response.status}: ${errorText}`);
       }
 
       const data = await response.json();
@@ -105,6 +109,7 @@ export default function EsportsAnalyzer() {
         setActiveTab('summary');
       }
     } catch (err) {
+      console.error('Analysis error:', err);
       setError(err.message);
     } finally {
       setLoading(false);
